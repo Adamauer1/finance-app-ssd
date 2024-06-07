@@ -1,74 +1,23 @@
-import { StyleSheet, Text, View , Image } from 'react-native';
-import TextButton from 'C:/Users/nina-/my-SSD-app/finance-app-ssd/financial-tracking-app/TextButton.tsx';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import * as React from 'react';
+import GetStartedScreen from 'C:/Users/nina-/my-SSD-app/finance-app-ssd/financial-tracking-app/screens/GetStartedScreen.js';
+import MainScreen from 'C:/Users/nina-/my-SSD-app/finance-app-ssd/financial-tracking-app/screens/MainScreen.js';
+import SignUpScreen from 'C:/Users/nina-/my-SSD-app/finance-app-ssd/financial-tracking-app/screens/SignUpScreen.js' ;
+import LogInScreen from 'C:/Users/nina-/my-SSD-app/finance-app-ssd/financial-tracking-app/screens/LogInScreen.js';
 
+
+const Stack = createNativeStackNavigator();
 export default function App() {
-
-
-//const HomeScreen = () => {
- // const navigation = useNavigation();
-
-  return (
-        <View style={styles.container}>
-            <Text style={styles.text}>    FINANCIAL TRACKER APP</Text> 
-             <View style={styles.imageContainer}>
-      <Image source={require('C:/Users/nina-/my-SSD-app/finance-app-ssd/financial-tracking-app/images/Main.png')} style={styles.image} />
-      </View>
-   
-      <TextButton
-        //onPress={() => navigation.navigate('MainScreen')}
-        buttonStyle={styles.button}
-        buttonText="GET STARTED"
-      />
- </View>
-       
+ return (
+    <NavigationContainer>
+      <Stack.Navigator initialRouteName="GetStarted">
+      <Stack.Screen name="GetStarted" component={GetStartedScreen}  />
+      <Stack.Screen name="Main" component={MainScreen} />
+      <Stack.Screen name="SignUP" component={SignUpScreen} />
+      <Stack.Screen name="LogIn" component={LogInScreen}  />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
-};
-
-const styles = StyleSheet.create({
-  container: {
-    fontSize: 80,
-    backgroundColor: 'black',
-    flex: 11,
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderColor: '#ccc',
-    alignContent: 'center',
-    padding: 7,
-    borderRadius: 5,
-  },
-  button: {
-    width: 300,
-    height: 50,
-    padding: 30,
-    backgroundColor: '#afee',
-    marginTop: 240,
-  },
-  background: {
-    flex: 1,
-    resizeMode: 'cover', // or 'stretch'
-  },
-  image: {
-    width: 250,
-    height: 250,
-   // marginRight: 10,
-    resizeMode : 'contain',
-    
-  },
-  imageContainer:{
-     flex: 1,
-    justifyContent: 'center',
-    //alignItems : 'center',
-    alignItems:'center',
-    marginTop: 250,
-    
-   
-  },
-  text: {
-    fontSize: 40,
-    fontWeight: 'bold',
-    //position : 'absolute',
-    top : 100,
-    color : '#999'
-   
-  },
-});
+}
+     
