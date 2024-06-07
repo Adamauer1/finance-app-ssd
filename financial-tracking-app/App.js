@@ -2,28 +2,15 @@ import { StyleSheet, Text, View , Image } from 'react-native';
 import TextButton from 'C:/Users/nina-/my-SSD-app/finance-app-ssd/financial-tracking-app/TextButton.tsx';
 
 export default function App() {
- /*return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <Text> home screen  </Text>
-      <StatusBar style="auto" />
-    </View>*/
- // );
-//}
+
+
 //const HomeScreen = () => {
  // const navigation = useNavigation();
 
   return (
-    /*
- <ImageBackground
-      source={require('C:/Users/nina-/my-SSD-app/finance-app-ssd/financial-tracking-app/images/Main.png')}
-      style={styles.background}
-    >*/
-      <View style={styles.container}>
-      
-      <Text style={styles.text}>    FINANCIAL TRACKER APP</Text> 
-     
-      <View style={styles.imageContainer}>
+        <View style={styles.container}>
+            <Text style={styles.text}>    FINANCIAL TRACKER APP</Text> 
+             <View style={styles.imageContainer}>
       <Image source={require('C:/Users/nina-/my-SSD-app/finance-app-ssd/financial-tracking-app/images/Main.png')} style={styles.image} />
       </View>
    
@@ -33,8 +20,7 @@ export default function App() {
         buttonText="GET STARTED"
       />
  </View>
-      // </ImageBackground>
-   
+       
   );
 };
 
