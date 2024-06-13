@@ -1,15 +1,9 @@
 import axios from "axios";
 import { router } from "expo-router";
 import { useState } from "react";
-import {
-  Pressable,
-  StyleSheet,
-  Text,
-  TextInput,
-  View
-} from "react-native";
+import { Pressable, StyleSheet, Text, TextInput, View } from "react-native";
 //import TextButton from "./TextButton.tsx";
-const URL = "172.20.10.3";
+import { URL } from "@/constants/URL";
 export default function LogInScreen({}) {
   //export default function GetStartedScreen({ navigation }) {
   const [username, onChangeUsername] = useState("");
@@ -24,7 +18,7 @@ export default function LogInScreen({}) {
     //console.log(username);
     const data = { username: username, password: password };
     axios
-      .post(`http://${URL}:3000/login`, {
+      .post(`${URL}/login`, {
         username,
         password,
       })
@@ -36,7 +30,6 @@ export default function LogInScreen({}) {
             pathname: `/home/${res.data.userID}`,
             params: { userID: res.data.userID },
           });
-          console.log("test");
         } else {
           // display error message
         }
