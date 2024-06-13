@@ -1,16 +1,15 @@
-import { useEffect, useState } from "react";
-import {
-  View,
-  StyleSheet,
-  Image,
-  TextInput,
-  Text,
-  Pressable,
-} from "react-native";
-import { Link, router } from "expo-router";
 import axios from "axios";
+import { router } from "expo-router";
+import { useState } from "react";
+import {
+  Pressable,
+  StyleSheet,
+  Text,
+  TextInput,
+  View
+} from "react-native";
 //import TextButton from "./TextButton.tsx";
-const URL = "";
+const URL = "172.20.10.3";
 export default function LogInScreen({}) {
   //export default function GetStartedScreen({ navigation }) {
   const [username, onChangeUsername] = useState("");
@@ -34,7 +33,7 @@ export default function LogInScreen({}) {
         if (res.data.result) {
           // navigate to next page
           router.replace({
-            pathname: "/main",
+            pathname: `/home/${res.data.userID}`,
             params: { userID: res.data.userID },
           });
           console.log("test");
