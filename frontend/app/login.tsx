@@ -9,8 +9,8 @@ import {
   TextInput,
   View,
 } from "react-native";
-
-const URL = "192.168.6.109";
+import { URL } from "@/constants/URL";
+// const URL = "192.168.6.109";
 export default function LogInScreen({}) {
   const [username, onChangeUsername] = useState("");
   const [password, onChangePassword] = useState("");

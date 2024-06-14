@@ -1,14 +1,16 @@
 import axios from "axios";
 import { router, useLocalSearchParams } from "expo-router";
-import * as React from 'react';
-import { Image, Pressable, StyleSheet, Text, View } from 'react-native';
+import * as React from "react";
+import { Image, Pressable, StyleSheet, Text, View } from "react-native";
 import { Link } from "expo-router";
-const URL = "192.168.6.109";
+import { URL } from "@/constants/URL";
+//const URL = "192.168.6.109";
 
 export default function AllScreens({}) {
   const params = useLocalSearchParams();
-  const {userID} = params;
-{/*
+  const { userID } = params;
+  {
+    /*
   const onPressLogin = async () => {
     // send post to server with username and password
     // check on server if valid
@@ -34,20 +36,20 @@ export default function AllScreens({}) {
         } 
       })
       .catch((error) => {});
-  };*/}
+  };*/
+  }
   return (
-<View style={styles.container}>
-
-        <View style={styles.imageContainer}>
-      <Image source={require('@/images/Main.png')} style={styles.image} />
+    <View style={styles.container}>
+      <View style={styles.imageContainer}>
+        <Image source={require("@/images/Main.png")} style={styles.image} />
       </View>
-      <Text style={styles.TEXT1}>HELLO - USER  {userID}</Text>
-      <Link href={'home/Transaction'} style={styles.button} asChild>
+      <Text style={styles.TEXT1}>HELLO - USER {userID}</Text>
+      <Link href={"home/Transaction"} style={styles.button} asChild>
         <Pressable>
           <Text style={styles.buttonText}>TRANSACTION</Text>
         </Pressable>
       </Link>
-      
+
       <Link href={"home/Budget"} style={styles.button} asChild>
         <Pressable>
           <Text style={styles.buttonText}>BUDGET</Text>
@@ -59,8 +61,7 @@ export default function AllScreens({}) {
           <Text style={styles.buttonText}>STATISTICS</Text>
         </Pressable>
       </Link>
-     </View>
- 
+    </View>
   );
 }
 const styles = StyleSheet.create({
@@ -72,7 +73,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     borderColor: "#ccc",
     alignContent: "center",
-    padding:7,
+    padding: 7,
     borderRadius: 5,
   },
   button: {
@@ -86,7 +87,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     shadowColor: "#000",
-    
+
     shadowOffset: {
       width: 0,
       height: 2,
@@ -112,21 +113,19 @@ const styles = StyleSheet.create({
 
   text: {
     fontSize: 20,
-    textAlign:'center',
+    textAlign: "center",
     fontWeight: "bold",
     color: "#999",
-    top:100,
+    top: 100,
   },
-  TEXT1 :
-  {
-      fontSize: 35,
-      textAlign:'center',
-      fontWeight: "bold",
-      position : 'absolute',
-      top: 25,
-      color: "#afee",
-    },
-  
+  TEXT1: {
+    fontSize: 35,
+    textAlign: "center",
+    fontWeight: "bold",
+    position: "absolute",
+    top: 25,
+    color: "#afee",
+  },
 
   background: {
     flex: 1,

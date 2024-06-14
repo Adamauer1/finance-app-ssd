@@ -7,10 +7,11 @@ import {
   StyleSheet,
   Text,
   TextInput,
-  View
+  View,
 } from "react-native";
 //import TextButton from "./TextButton.tsx";
-const URL = "192.168.1.28";
+import { URL } from "@/constants/URL";
+//const URL = "192.168.1.28";
 export default function LogInScreen({}) {
   //export default function GetStartedScreen({ navigation }) {
   const [username, onChangeUsername] = useState("");
@@ -25,7 +26,7 @@ export default function LogInScreen({}) {
     //console.log(username);
     const data = { username: username, password: password };
     axios
-      .post(`http://${URL}:3000/login`, {
+      .post(`${URL}/login`, {
         username,
         password,
       })
@@ -48,7 +49,7 @@ export default function LogInScreen({}) {
     <View style={styles.container}>
       <Text style={styles.TEXT1}>USER SIGNUP </Text>
       <View style={styles.imageContainer}>
-        <Image source={require("@/images/Main.png")} style={styles.image} /> 
+        <Image source={require("@/images/Main.png")} style={styles.image} />
         <Text style={styles.text}>USERNAME</Text>
         <TextInput
           style={styles.input}
@@ -86,7 +87,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     borderColor: "#ccc",
     alignContent: "center",
-    padding:7,
+    padding: 7,
     borderRadius: 5,
   },
   button: {
@@ -100,7 +101,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     shadowColor: "#000",
-    
+
     shadowOffset: {
       width: 0,
       height: 2,
@@ -126,21 +127,19 @@ const styles = StyleSheet.create({
 
   text: {
     fontSize: 20,
-    textAlign:'center',
+    textAlign: "center",
     fontWeight: "bold",
     color: "#999",
-    top:100,
+    top: 100,
   },
-  TEXT1 :
-  {
-      fontSize: 40,
-      textAlign:'center',
-      fontWeight: "bold",
-      position : 'absolute',
-      top: 80,
-      color: "#afee",
-    },
-  
+  TEXT1: {
+    fontSize: 40,
+    textAlign: "center",
+    fontWeight: "bold",
+    position: "absolute",
+    top: 80,
+    color: "#afee",
+  },
 
   background: {
     flex: 1,
