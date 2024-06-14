@@ -42,13 +42,13 @@ export default function AllScreens({}) {
       <Image source={require('@/images/Main.png')} style={styles.image} />
       </View>
       <Text style={styles.TEXT1}>HELLO - USER  {userID}</Text>
-      <Link href={'Transaction.tsx'} style={styles.button} asChild>
+      <Link href={'home/Transaction'} style={styles.button} asChild>
         <Pressable>
           <Text style={styles.buttonText}>TRANSACTION</Text>
         </Pressable>
       </Link>
       
-      <Link href={"/Budget"} style={styles.button} asChild>
+      <Link href={"home/Budget"} style={styles.button} asChild>
         <Pressable>
           <Text style={styles.buttonText}>BUDGET</Text>
         </Pressable>
