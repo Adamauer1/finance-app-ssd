@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { useState } from 'react';
-import { Pressable, StyleSheet, Text, TextInput, View, Image } from 'react-native';
+import { Image, Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
 
 const URL = ' 192.168.6.109'; // Your server IP
 
@@ -124,7 +124,7 @@ export default function AddTrans() {
         },
         TEXT1 :
         {
-            fontSize: 35,
+            fontSize: 25,
             textAlign:'center',
             fontWeight: "bold",
             position : 'absolute',
@@ -139,7 +139,7 @@ export default function AddTrans() {
         },
         image: {
           width: 250,
-          height: 250,
+          height: 126,
           // marginRight: 10,
           resizeMode: "contain",
         },

@@ -2,6 +2,7 @@ import axios from "axios";
 import { router, useLocalSearchParams } from "expo-router";
 import * as React from 'react';
 import { Image, Pressable, StyleSheet, Text, View } from 'react-native';
+import { Link } from "expo-router";
 
 const URL = "192.168.6.109";
 
@@ -42,22 +43,28 @@ export default function Transaction({}) {
       <Image source={require('@/images/Main.png')} style={styles.image} />
       </View>
       <Text style={styles.TEXT1}>TRANSACTIONS</Text>
-    <Pressable style={styles.button} onPress={onPressTransaction}>
+      <Link href={'home/AddTrans'} style={styles.button} asChild>
+        <Pressable>
           <Text style={styles.buttonText}>ADD</Text>
         </Pressable>
-
-        <Pressable style={styles.button} onPress={onPressTransaction}>
+      </Link>
+      
+      <Link href={"home/Budget"} style={styles.button} asChild>
+        <Pressable>
           <Text style={styles.buttonText}>VIEW</Text>
         </Pressable>
+      </Link>
 
-        <Pressable style={styles.button} onPress={onPressTransaction}>
-          <Text style={styles.buttonText}>UPDATE</Text>
-        </Pressable>
-
-        <Pressable style={styles.button} onPress={onPressTransaction}>
+      <Link href={"/Statitics"} style={styles.button} asChild>
+        <Pressable>
           <Text style={styles.buttonText}>DELETE</Text>
         </Pressable>
-
+      </Link>
+      <Link href={"/Statitics"} style={styles.button} asChild>
+        <Pressable>
+          <Text style={styles.buttonText}>UPDATE</Text>
+        </Pressable>
+      </Link>
       </View>
  
   );
@@ -123,7 +130,7 @@ const styles = StyleSheet.create({
       textAlign:'center',
       fontWeight: "bold",
       position : 'absolute',
-      top: 25,
+      top: 15,
       color: "#afee",
     },
   
@@ -134,7 +141,7 @@ const styles = StyleSheet.create({
   },
   image: {
     width: 250,
-    height: 250,
+    height: 200,
     // marginRight: 10,
     resizeMode: "contain",
   },
