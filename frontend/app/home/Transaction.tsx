@@ -49,18 +49,18 @@ export default function Transaction({}) {
         </Pressable>
       </Link>
       
-      <Link href={"home/Budget"} style={styles.button} asChild>
+      <Link href={"home/ViewTrans"} style={styles.button} asChild>
         <Pressable>
           <Text style={styles.buttonText}>VIEW</Text>
         </Pressable>
       </Link>
 
-      <Link href={"/Statitics"} style={styles.button} asChild>
+      <Link href={"/Delete"} style={styles.button} asChild>
         <Pressable>
           <Text style={styles.buttonText}>DELETE</Text>
         </Pressable>
       </Link>
-      <Link href={"/Statitics"} style={styles.button} asChild>
+      <Link href={"/Update"} style={styles.button} asChild>
         <Pressable>
           <Text style={styles.buttonText}>UPDATE</Text>
         </Pressable>
