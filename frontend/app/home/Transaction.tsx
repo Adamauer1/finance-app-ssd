@@ -1,6 +1,7 @@
 import axios from "axios";
 import { router, useLocalSearchParams } from "expo-router";
-import * as React from "react";
+//import * as React from "react";
+import { useEffect, useState } from "react";
 import { Image, Pressable, StyleSheet, Text, View } from "react-native";
 import { Link } from "expo-router";
 import { URL } from "@/constants/URL";
@@ -9,6 +10,20 @@ import { URL } from "@/constants/URL";
 export default function Transaction({}) {
   const params = useLocalSearchParams();
   const { userID } = params;
+  // const [transactions, onChangeTransactions] = useState([]);
+  let transactions = [];
+  useEffect(() => {
+    // gets all transaction objects
+    axios
+      .post(`${URL}/user/transactions`, {
+        userID,
+      })
+      .then((res) => {
+        //onChangeTransactions(res.data);
+        transactions = res.data;
+        console.log(transactions);
+      });
+  });
 
   const onPressTransaction = async () => {
     // send post to server with username and password
@@ -41,24 +56,28 @@ export default function Transaction({}) {
         <Image source={require("@/images/Main.png")} style={styles.image} />
       </View>
       <Text style={styles.TEXT1}>TRANSACTIONS</Text>
-      <Link href={"home/AddTrans"} style={styles.button} asChild>
+      <Link
+        href={{ pathname: "/home/AddTrans", params: { userID } }}
+        style={styles.button}
+        asChild
+      >
         <Pressable>
           <Text style={styles.buttonText}>ADD</Text>
         </Pressable>
       </Link>
 
-      <Link href={"home/Budget"} style={styles.button} asChild>
+      <Link href={"/home/View"} style={styles.button} asChild>
         <Pressable>
           <Text style={styles.buttonText}>VIEW</Text>
         </Pressable>
       </Link>
 
-      <Link href={"/Statitics"} style={styles.button} asChild>
+      <Link href={"/home/Delete"} style={styles.button} asChild>
         <Pressable>
           <Text style={styles.buttonText}>DELETE</Text>
         </Pressable>
       </Link>
-      <Link href={"/Statitics"} style={styles.button} asChild>
+      <Link href={"/home/Update"} style={styles.button} asChild>
         <Pressable>
           <Text style={styles.buttonText}>UPDATE</Text>
         </Pressable>

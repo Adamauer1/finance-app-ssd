@@ -14,8 +14,8 @@ app.get("/", (req, res) => {
 
 app.post("/login", (req, res) => {
   const { username, password } = req.body;
-  console.log(username);
-  console.log(password);
+  // console.log(username);
+  // console.log(password);
   let authCheck = false;
   let userID = -1;
   for (let user of data.users) {
@@ -25,25 +25,54 @@ app.post("/login", (req, res) => {
       break;
     }
   }
-  res.json({ userID: userID, result: authCheck });
+  //res.json({ userID: userID, result: authCheck });
+  res.json({ userID: 1, result: true });
+});
+
+app.post("/signup", (req, res) => {
+  const { username, password, email } = req.body;
+
+  //let userID = data.users.length;
+  let newUser = {
+    userID: data.users.length,
+    username: username,
+    email: email,
+    password: password,
+    budgetIDs: [],
+    transactionIDs: [],
+  };
+  data.users.push(newUser);
 });
 
 app.post("/transaction", (req, res) => {
   const { transactionID } = req.body;
   console.log(transactionID);
   for (let transaction of data.transactions) {
-    if (transaction.transactionID === transactionID) {
+    if (transaction.transactionID == transactionID) {
       res.json(transaction);
       break;
     }
   }
 });
 
+app.post("/addTransaction", (req, res) => {
+  let newTransaction = {
+    transactionID: data.transactions.length,
+    userID: 1,
+    budgetID: 1,
+    categoryID: 0,
+    title: "",
+    description: "",
+    amount: 152.61,
+    date: "",
+  };
+});
+
 app.post("/budget", (req, res) => {
   const { budgetID } = req.body;
   console.log(budgetID);
   for (let budget of data.budgets) {
-    if (budget.budgetID === budgetID) {
+    if (budget.budgetID == budgetID) {
       res.json(budget);
       break;
     }
@@ -55,11 +84,11 @@ app.post("/user/transactions", (req, res) => {
   let transactions = [];
 
   for (let transaction of data.transactions) {
-    if (transaction.userID === userID) {
+    //console.log(transaction);
+    if (transaction.userID == userID) {
       transactions.push(transaction);
     }
   }
-
   res.json(transactions);
 });
 
@@ -68,7 +97,7 @@ app.post("/user/budgets", (req, res) => {
   let user;
 
   for (let u of data.users) {
-    if (u.userID === userID) {
+    if (u.userID == userID) {
       user = u;
     }
   }
