@@ -1,10 +1,3 @@
-// import React from "react";
-
-// export default function GetStartedScreen() {
-//   return <div>GetStartedScreen</div>;
-// }
-
-//import * as React from "react";
 import { View, Text, StyleSheet, Image, Pressable, Button } from "react-native";
 import { Link, useRouter } from "expo-router";
 import TextButton from "@/components/TextButton";
@@ -46,19 +39,27 @@ const styles = StyleSheet.create({
     borderRadius: 5,
   },
   button: {
-    display: "flex",
-    flexDirection: "row",
     width: 300,
     height: 50,
-    //padding: 30,
-    backgroundColor: "#afee",
-    //#afee
-    marginTop: 40,
+    padding: 10,
+    backgroundColor: "#AFEE",
+    marginTop: 20,
+    marginBottom: 100,
+    borderRadius: 25,
     justifyContent: "center",
     alignItems: "center",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
   },
   buttonText: {
-    fontSize: 20,
+    color: "black",
+    fontSize: 25,
     fontWeight: "bold",
   },
 
@@ -81,8 +82,9 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: 40,
+    textAlign:'center',
     fontWeight: "bold",
-    //position : 'absolute',
+    position : 'absolute',
     top: 100,
     color: "#999",
   },

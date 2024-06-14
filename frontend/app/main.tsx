@@ -19,16 +19,7 @@ export default function MainScreen() {
           <Text style={styles.buttonText}>LOG IN</Text>
         </Pressable>
       </Link>
-      {/* <TextButton
-        onPress={() => navigation.navigate("SignUpScreen")}
-        buttonStyle={styles.button}
-        buttonText="SIGNUP"
-      />
-      <TextButton
-        onPress={() => navigation.navigate("LogInScreen")}
-        buttonStyle={styles.button}
-        buttonText="LOG IN"
-      /> */}
+     
     </View>
   );
 }
@@ -48,16 +39,26 @@ const styles = StyleSheet.create({
   button: {
     width: 300,
     height: 50,
-    //padding: 10,
-    backgroundColor: "#afee",
-    marginTop: 20,
-    marginBottom: 100,
-    display: "flex",
+    padding: 10,
+    backgroundColor: "#AFEE",
+    marginTop: 10,
+    marginBottom: 140,
+    borderRadius: 25,
     justifyContent: "center",
     alignItems: "center",
+    shadowColor: "#000",
+    shadowOffset: 
+    {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
   },
   buttonText: {
-    fontSize: 20,
+    color: "black",
+    fontSize: 25,
     fontWeight: "bold",
   },
   background: {
@@ -68,7 +69,7 @@ const styles = StyleSheet.create({
     width: 250,
     height: 250,
     // marginRight: 10,
-    resizeMode: "contain",
+   // resizeMode: "contain",
   },
   imageContainer: {
     flex: 1,

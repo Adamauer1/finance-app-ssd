@@ -1,16 +1,19 @@
 import axios from "axios";
 import { router } from "expo-router";
 import { useState } from "react";
-import { Pressable, StyleSheet, Text, TextInput, View } from "react-native";
-//import TextButton from "./TextButton.tsx";
-import { URL } from "@/constants/URL";
+import {
+  Pressable,
+  Image,
+  StyleSheet,
+  Text,
+  TextInput,
+  View,
+} from "react-native";
+
+const URL = "192.168.6.109";
 export default function LogInScreen({}) {
-  //export default function GetStartedScreen({ navigation }) {
   const [username, onChangeUsername] = useState("");
   const [password, onChangePassword] = useState("");
-  //   const [checkLogin, setCheckLogin] = useState(false);
-  //   const [loginResult, setLoginResult] = useState(false);
-
   const onPressLogin = async () => {
     // send post to server with username and password
     // check on server if valid
@@ -38,25 +41,27 @@ export default function LogInScreen({}) {
   };
   return (
     <View style={styles.container}>
+      <Text style={styles.TEXT1}>USER LOGIN </Text>
       <View style={styles.imageContainer}>
-        {/* <Image source={require("@/images/Main.png")} style={styles.image} /> */}
-        <Text style={styles.text}>Username</Text>
-        <TextInput
-          style={styles.input}
-          value={username}
-          onChangeText={onChangeUsername}
-        />
-        <Text style={styles.text}>Password</Text>
-        <TextInput
-          style={styles.input}
-          value={password}
-          onChangeText={onChangePassword}
-          secureTextEntry={true}
-        />
-        <Pressable style={styles.button} onPress={onPressLogin}>
-          <Text>Login</Text>
-        </Pressable>
+        <Image source={require("@/images/Main.png")} style={styles.image} />
       </View>
+
+      <Text style={styles.text}>USERNAME</Text>
+      <TextInput
+        style={styles.input}
+        value={username}
+        onChangeText={onChangeUsername}
+      />
+      <Text style={styles.text}>PASSWORD</Text>
+      <TextInput
+        style={styles.input}
+        value={password}
+        onChangeText={onChangePassword}
+        secureTextEntry={true}
+      />
+      <Pressable style={styles.button} onPress={onPressLogin}>
+        <Text style={styles.buttonText}>LOGIN</Text>
+      </Pressable>
     </View>
   );
 }
@@ -78,8 +83,25 @@ const styles = StyleSheet.create({
     height: 50,
     padding: 10,
     backgroundColor: "#afee",
-    marginTop: 20,
-    marginBottom: 100,
+    marginTop: 55,
+    marginBottom: 20,
+    borderRadius: 25,
+    justifyContent: "center",
+    alignItems: "center",
+    shadowColor: "#000",
+
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
+  },
+  buttonText: {
+    color: "black",
+    fontSize: 26,
+    fontWeight: "bold",
   },
   input: {
     height: 60,
@@ -92,7 +114,19 @@ const styles = StyleSheet.create({
   },
 
   text: {
-    color: "white",
+    fontSize: 20,
+    textAlign: "center",
+    fontWeight: "bold",
+    color: "#999",
+    top: 100,
+  },
+  TEXT1: {
+    fontSize: 40,
+    textAlign: "center",
+    fontWeight: "bold",
+    position: "absolute",
+    top: 70,
+    color: "#afee",
   },
 
   background: {
@@ -101,7 +135,7 @@ const styles = StyleSheet.create({
   },
   image: {
     width: 250,
-    height: 250,
+    height: 180,
     // marginRight: 10,
     resizeMode: "contain",
   },
