@@ -2,14 +2,14 @@ import axios from "axios";
 import { router, useLocalSearchParams } from "expo-router";
 import * as React from 'react';
 import { Image, Pressable, StyleSheet, Text, View } from 'react-native';
-import { Link } from "expo-router";
+
 const URL = "192.168.6.109";
 
-export default function AllScreens({}) {
+export default function Transaction({}) {
   const params = useLocalSearchParams();
   const {userID} = params;
-{/*
-  const onPressLogin = async () => {
+
+  const onPressTransaction = async () => {
     // send post to server with username and password
     // check on server if valid
     // return result by moving to next page or displaying error
@@ -26,43 +26,43 @@ export default function AllScreens({}) {
           // navigate to next page
           router.replace({
             pathname: `/home/${res.data.userID}`,
-            params: { userID: res.data.userID },
+          //  params: { userID: res.data.userID },
           });
           console.log("test");
         } else {
           // display error message
-        } 
+        }
       })
       .catch((error) => {});
-  };*/}
+  };
   return (
 <View style={styles.container}>
 
-        <View style={styles.imageContainer}>
+           <View style={styles.imageContainer}>
       <Image source={require('@/images/Main.png')} style={styles.image} />
       </View>
-      <Text style={styles.TEXT1}>HELLO - USER  {userID}</Text>
-      <Link href={'Transaction.tsx'} style={styles.button} asChild>
-        <Pressable>
-          <Text style={styles.buttonText}>TRANSACTION</Text>
+      <Text style={styles.TEXT1}>TRANSACTIONS</Text>
+    <Pressable style={styles.button} onPress={onPressTransaction}>
+          <Text style={styles.buttonText}>ADD</Text>
         </Pressable>
-      </Link>
-      
-      <Link href={"/Budget"} style={styles.button} asChild>
-        <Pressable>
-          <Text style={styles.buttonText}>BUDGET</Text>
-        </Pressable>
-      </Link>
 
-      <Link href={"/Statitics"} style={styles.button} asChild>
-        <Pressable>
-          <Text style={styles.buttonText}>STATISTICS</Text>
+        <Pressable style={styles.button} onPress={onPressTransaction}>
+          <Text style={styles.buttonText}>VIEW</Text>
         </Pressable>
-      </Link>
-     </View>
+
+        <Pressable style={styles.button} onPress={onPressTransaction}>
+          <Text style={styles.buttonText}>UPDATE</Text>
+        </Pressable>
+
+        <Pressable style={styles.button} onPress={onPressTransaction}>
+          <Text style={styles.buttonText}>DELETE</Text>
+        </Pressable>
+
+      </View>
  
   );
 }
+
 const styles = StyleSheet.create({
   container: {
     fontSize: 80,
