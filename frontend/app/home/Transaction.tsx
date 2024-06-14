@@ -1,29 +1,24 @@
 import axios from "axios";
-import { router } from "expo-router";
-import { useState } from "react";
-import {
-  Pressable,
-  Image,
-  StyleSheet,
-  Text,
-  TextInput,
-  View,
-} from "react-native";
+import { router, useLocalSearchParams } from "expo-router";
+import * as React from "react";
+import { Image, Pressable, StyleSheet, Text, View } from "react-native";
+import { Link } from "expo-router";
 import { URL } from "@/constants/URL";
-// const URL = "192.168.6.109";
-export default function LogInScreen({}) {
-  const [username, onChangeUsername] = useState("");
-  const [password, onChangePassword] = useState("");
-  const onPressLogin = async () => {
+//const URL = "192.168.6.109";
+
+export default function Transaction({}) {
+  const params = useLocalSearchParams();
+  const { userID } = params;
+
+  const onPressTransaction = async () => {
     // send post to server with username and password
     // check on server if valid
     // return result by moving to next page or displaying error
     //console.log(username);
-    const data = { username: username, password: password };
+    const data = { username: userID };
     axios
       .post(`${URL}/login`, {
-        username,
-        password,
+        userID,
       })
       .then((res) => {
         console.log(res.data);
@@ -31,8 +26,9 @@ export default function LogInScreen({}) {
           // navigate to next page
           router.replace({
             pathname: `/home/${res.data.userID}`,
-            params: { userID: res.data.userID },
+            //  params: { userID: res.data.userID },
           });
+          console.log("test");
         } else {
           // display error message
         }
@@ -41,27 +37,32 @@ export default function LogInScreen({}) {
   };
   return (
     <View style={styles.container}>
-      <Text style={styles.TEXT1}>USER LOGIN </Text>
       <View style={styles.imageContainer}>
         <Image source={require("@/images/Main.png")} style={styles.image} />
       </View>
+      <Text style={styles.TEXT1}>TRANSACTIONS</Text>
+      <Link href={"home/AddTrans"} style={styles.button} asChild>
+        <Pressable>
+          <Text style={styles.buttonText}>ADD</Text>
+        </Pressable>
+      </Link>
 
-      <Text style={styles.text}>USERNAME</Text>
-      <TextInput
-        style={styles.input}
-        value={username}
-        onChangeText={onChangeUsername}
-      />
-      <Text style={styles.text}>PASSWORD</Text>
-      <TextInput
-        style={styles.input}
-        value={password}
-        onChangeText={onChangePassword}
-        secureTextEntry={true}
-      />
-      <Pressable style={styles.button} onPress={onPressLogin}>
-        <Text style={styles.buttonText}>LOGIN</Text>
-      </Pressable>
+      <Link href={"home/Budget"} style={styles.button} asChild>
+        <Pressable>
+          <Text style={styles.buttonText}>VIEW</Text>
+        </Pressable>
+      </Link>
+
+      <Link href={"/Statitics"} style={styles.button} asChild>
+        <Pressable>
+          <Text style={styles.buttonText}>DELETE</Text>
+        </Pressable>
+      </Link>
+      <Link href={"/Statitics"} style={styles.button} asChild>
+        <Pressable>
+          <Text style={styles.buttonText}>UPDATE</Text>
+        </Pressable>
+      </Link>
     </View>
   );
 }
@@ -121,11 +122,11 @@ const styles = StyleSheet.create({
     top: 100,
   },
   TEXT1: {
-    fontSize: 40,
+    fontSize: 35,
     textAlign: "center",
     fontWeight: "bold",
     position: "absolute",
-    top: 70,
+    top: 15,
     color: "#afee",
   },
 
@@ -135,7 +136,7 @@ const styles = StyleSheet.create({
   },
   image: {
     width: 250,
-    height: 180,
+    height: 200,
     // marginRight: 10,
     resizeMode: "contain",
   },
@@ -143,6 +144,6 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    marginTop: 10,
+    marginTop: 100,
   },
 });

@@ -1,71 +1,72 @@
 import axios from "axios";
-import { router } from "expo-router";
 import { useState } from "react";
 import {
-  Pressable,
   Image,
+  Pressable,
   StyleSheet,
   Text,
   TextInput,
   View,
 } from "react-native";
 import { URL } from "@/constants/URL";
-// const URL = "192.168.6.109";
-export default function LogInScreen({}) {
-  const [username, onChangeUsername] = useState("");
-  const [password, onChangePassword] = useState("");
-  const onPressLogin = async () => {
-    // send post to server with username and password
-    // check on server if valid
-    // return result by moving to next page or displaying error
-    //console.log(username);
-    const data = { username: username, password: password };
-    axios
-      .post(`${URL}/login`, {
-        username,
-        password,
-      })
-      .then((res) => {
-        console.log(res.data);
-        if (res.data.result) {
-          // navigate to next page
-          router.replace({
-            pathname: `/home/${res.data.userID}`,
-            params: { userID: res.data.userID },
-          });
-        } else {
-          // display error message
-        }
-      })
-      .catch((error) => {});
+//const URL = ' 192.168.6.109'; // Your server IP
+
+export default function AddTrans() {
+  const [userID, setUserID] = useState("");
+  const [budgetID, setBudgetID] = useState("");
+  const [categoryID, setCategoryID] = useState("");
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+  const [amount, setAmount] = useState("");
+  const [date, setDate] = useState("");
+
+  const onPressAddTransaction = async () => {
+    try {
+      const response = await axios.post(`${URL}/addTransaction`, {
+        categoryID,
+        title,
+        description,
+        amount,
+        date,
+      });
+      console.log("Transaction ID:", response.data.transactionID);
+      console.log("Transaction ID:", response.data.userID);
+      console.log("Transaction ID:", response.data.budgetID);
+    } catch (error) {
+      console.error(error);
+    }
   };
+
   return (
     <View style={styles.container}>
-      <Text style={styles.TEXT1}>USER LOGIN </Text>
       <View style={styles.imageContainer}>
         <Image source={require("@/images/Main.png")} style={styles.image} />
       </View>
+      <Text style={styles.TEXT1}>ADD TRANSACTION</Text>
 
-      <Text style={styles.text}>USERNAME</Text>
+      <Text style={styles.text}>Title</Text>
+      <TextInput style={styles.input} value={title} onChangeText={setTitle} />
+      <Text style={styles.text}>Description</Text>
       <TextInput
         style={styles.input}
-        value={username}
-        onChangeText={onChangeUsername}
+        value={description}
+        onChangeText={setDescription}
       />
-      <Text style={styles.text}>PASSWORD</Text>
+      <Text style={styles.text}>Amount</Text>
       <TextInput
         style={styles.input}
-        value={password}
-        onChangeText={onChangePassword}
-        secureTextEntry={true}
+        value={amount}
+        onChangeText={setAmount}
+        keyboardType="numeric"
       />
-      <Pressable style={styles.button} onPress={onPressLogin}>
-        <Text style={styles.buttonText}>LOGIN</Text>
+      <Text style={styles.text}>Date</Text>
+      <TextInput style={styles.input} value={date} onChangeText={setDate} />
+      <Pressable style={styles.button} onPress={onPressAddTransaction}>
+        <Text style={styles.buttonText}>Add Transaction</Text>
       </Pressable>
     </View>
   );
 }
-
 const styles = StyleSheet.create({
   container: {
     fontSize: 80,
@@ -121,11 +122,11 @@ const styles = StyleSheet.create({
     top: 100,
   },
   TEXT1: {
-    fontSize: 40,
+    fontSize: 25,
     textAlign: "center",
     fontWeight: "bold",
     position: "absolute",
-    top: 70,
+    top: 25,
     color: "#afee",
   },
 
@@ -135,7 +136,7 @@ const styles = StyleSheet.create({
   },
   image: {
     width: 250,
-    height: 180,
+    height: 126,
     // marginRight: 10,
     resizeMode: "contain",
   },
@@ -143,6 +144,6 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    marginTop: 10,
+    marginTop: 100,
   },
 });
