@@ -1,8 +1,20 @@
-import * as React from "react";
+import { useEffect } from "react";
 import { View, StyleSheet, Image, Pressable, Text } from "react-native";
 import { Link } from "expo-router";
+import { URL } from "@/constants/URL";
+import axios from "axios";
 
 export default function MainScreen() {
+  let userID = 1;
+  useEffect(() => {
+    axios
+      .post(`${URL}/user/budgets`, {
+        userID,
+      })
+      .then((res) => {
+        console.log(res.data);
+      });
+  });
   return (
     <View style={styles.container}>
       <View style={styles.imageContainer}>
