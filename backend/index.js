@@ -56,16 +56,21 @@ app.post("/transaction", (req, res) => {
 });
 
 app.post("/addTransaction", (req, res) => {
+  const { userID, budgetID, categoryID, title, description, amount, date } =
+    req.body;
+
   let newTransaction = {
     transactionID: data.transactions.length,
-    userID: 1,
-    budgetID: 1,
-    categoryID: 0,
-    title: "",
-    description: "",
-    amount: 152.61,
-    date: "",
+    userID: userID,
+    budgetID: budgetID,
+    categoryID: categoryID,
+    title: title,
+    description: description,
+    amount: amount,
+    date: date,
   };
+
+  data.transactions.push(newTransaction);
 });
 
 app.post("/budget", (req, res) => {

@@ -23,6 +23,8 @@ export default function AddTrans() {
   const onPressAddTransaction = async () => {
     try {
       const response = await axios.post(`${URL}/addTransaction`, {
+        userID,
+        budgetID,
         categoryID,
         title,
         description,
