@@ -9,7 +9,7 @@ app.use(cors());
 app.use(bodyParser.json());
 
 app.get("/", (req, res) => {
-  res.json(data);
+  //res.json(data);
 });
 
 app.post("/login", (req, res) => {
@@ -73,15 +73,49 @@ app.post("/addTransaction", (req, res) => {
   data.transactions.push(newTransaction);
 });
 
-app.post("/budget", (req, res) => {
-  const { budgetID } = req.body;
-  console.log(budgetID);
-  for (let budget of data.budgets) {
-    if (budget.budgetID == budgetID) {
-      res.json(budget);
+app.post("/editTransaction", (req, res) => {
+  const {
+    transactionID,
+    userID,
+    budgetID,
+    categoryID,
+    title,
+    description,
+    amount,
+    date,
+  } = req.body;
+
+  for (let transaction of data.transactions) {
+    if (transaction.transactionID == transactionID) {
+      transaction.categoryID = categoryID;
+      transaction.title = title;
+      transaction.categoryID = description;
+      transaction.amount = amount;
+      transaction.date = date;
       break;
     }
   }
+});
+
+app.post("/deleteTransaction", (req, res) => {
+  const { transactionID, userID } = req.body;
+  // remove transaction from data.transaction and data.userID
+});
+
+app.post("/budget", (req, res) => {
+  const { budgetID } = req.body;
+});
+
+app.post("/addBudget", (req, res) => {
+  const { budgetID } = req.body;
+});
+
+app.post("/editBudget", (req, res) => {
+  const { budgetID } = req.body;
+});
+
+app.post("/deleteBudget", (req, res) => {
+  const { budgetID } = req.body;
 });
 
 app.post("/user/transactions", (req, res) => {
