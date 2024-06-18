@@ -1,78 +1,132 @@
-import React, { useEffect, useState } from "react";
-import { View, Text, FlatList, StyleSheet } from "react-native";
-import { Divider, List, ListItem } from "@ui-kitten/components";
-import { useLocalSearchParams } from "expo-router";
 import axios from "axios";
+import React, { useState, useEffect } from "react";
+import { StyleSheet, Text, View, FlatList, Pressable } from "react-native";
+import { useLocalSearchParams, router } from "expo-router";
 import { URL } from "@/constants/URL";
 
 interface Transaction {
   transactionID: number;
-  userID: number;
-  budgetID: number;
-  categoryID: number;
   title: string;
-  description: string;
   amount: number;
+  description: string;
   date: string;
 }
 
-export default function ViewTransactionScreen() {
+export default function ViewTrans() {
   const params = useLocalSearchParams();
   const { userID } = params;
-  //console.log(userID);
-  //console.log(transactions);
-  //const [transactions, setTransactions] = useState([]);
+  const [transactions, setTransactions] = useState<Transaction[]>([]);
   const [loading, setLoading] = useState(true);
   //let transactions: [] = [];
-  const [transactions, setTransactions] = useState([]);
+  //const [transactions, setTransactions] = useState([]);
 
   useEffect(() => {
-    axios
-      .post(`${URL}/user/transactions`, {
-        userID,
-      })
-      .then((res) => {
-        //console.log(res.data);
-        //transactions = res.data;
-        setTransactions(res.data);
-        //console.log(transactions);
-      });
+    fetchTransactions();
   }, []);
 
-  const renderItem = ({ item }: { item: Transaction }) => {
-    //console.log(item);
-    //return <Text>Test</Text>;
-    console.log(item.title);
-    return <ListItem title={item.title} description={item.amount} />;
+  // let transactions = [];
+  // useEffect(() => {
+  //   // gets all transaction objects
+  //   axios
+  //     .post(`${URL}/user/transactions`, {
+  //       userID,
+  //     })
+  //     .then((res) => {
+  //       //onChangeTransactions(res.data);
+  //       transactions = res.data;
+  //       console.log(transactions);
+  //     });
+  // });
+
+  const fetchTransactions = () => {
+    axios
+      .post(`${URL}/user/transactions`, { userID })
+      .then((res) => {
+        setTransactions(res.data);
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.error("Error fetching transactions:", error);
+        alert("Failed to fetch transactions");
+        setLoading(false);
+      });
   };
+
+  const renderItem = ({ item }: { item: Transaction }) => (
+    <View style={styles.transactionItem}>
+      <Text style={styles.transactionText}>{`Title: ${item.title}`}</Text>
+      <Text style={styles.transactionText}>{`Amount: $${item.amount}`}</Text>
+      <Text
+        style={styles.transactionText}
+      >{`Description: ${item.description}`}</Text>
+      <Text style={styles.transactionText}>{`Date: ${new Date(
+        item.date
+      ).toLocaleDateString()}`}</Text>
+    </View>
+  );
 
   return (
     <View style={styles.container}>
-      <List
-        style={styles.container}
-        data={transactions}
-        ItemSeparatorComponent={Divider}
-        renderItem={renderItem}
-      />
+      <Text style={styles.header}>Transactions</Text>
+      {loading ? (
+        <Text>Loading...</Text>
+      ) : (
+        <FlatList
+          data={transactions}
+          keyExtractor={(item) => item.transactionID.toString()}
+          renderItem={renderItem}
+          style={styles.flatList}
+        />
+      )}
+      <Pressable style={styles.button} onPress={() => router.back()}>
+        <Text style={styles.buttonText}>Back</Text>
+      </Pressable>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    width: "100%",
-    height: "100%",
-    // justifyContent: "center",
-    // alignItems: "center",
+    flex: 1,
     backgroundColor: "black",
+    justifyContent: "center",
+    alignItems: "center",
+    padding: 20,
   },
-  text: {
-    color: "white",
+  header: {
+    fontSize: 24,
+    fontWeight: "bold",
+    color: "#afee",
+    marginBottom: 20,
   },
-  item: {
+  button: {
+    width: 300,
+    height: 50,
     padding: 10,
-    marginVertical: 8,
-    backgroundColor: "#333",
+    backgroundColor: "#afee",
+    marginTop: 20,
+    borderRadius: 25,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  buttonText: {
+    color: "black",
+    fontSize: 20,
+    fontWeight: "bold",
+  },
+  transactionItem: {
+    backgroundColor: "#fff",
+    padding: 10,
+    marginBottom: 10,
     borderRadius: 5,
+    width: "100%",
+  },
+  transactionText: {
+    fontSize: 16,
+    color: "#000",
+    marginBottom: 5,
+  },
+  flatList: {
+    width: "100%",
   },
 });
