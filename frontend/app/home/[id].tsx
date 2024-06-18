@@ -1,9 +1,6 @@
-import axios from "axios";
-import { router, useLocalSearchParams } from "expo-router";
+import { Link, useLocalSearchParams } from "expo-router";
 import * as React from "react";
 import { Image, Pressable, StyleSheet, Text, View } from "react-native";
-import { Link } from "expo-router";
-import { URL } from "@/constants/URL";
 //const URL = "192.168.6.109";
 
 export default function AllScreens({}) {
@@ -131,7 +128,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
     fontWeight: "bold",
     position: "absolute",
-    top: 25,
+    top: 75,
     color: "#afee",
   },
 

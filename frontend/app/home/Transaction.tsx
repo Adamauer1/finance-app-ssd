@@ -149,7 +149,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
     fontWeight: "bold",
     position: "absolute",
-    top: 15,
+    top: 35,
     color: "#afee",
   },
 
