@@ -16,34 +16,37 @@ export default function LogInScreen({}) {
   //export default function GetStartedScreen({ navigation }) {
   const [username, onChangeUsername] = useState("");
   const [password, onChangePassword] = useState("");
+  const [cPassword, onChangeCPassword] = useState("");
+  const [email, onChangeEmail] = useState("");
   //   const [checkLogin, setCheckLogin] = useState(false);
   //   const [loginResult, setLoginResult] = useState(false);
 
-  const onPressLogin = async () => {
-    // send post to server with username and password
-    // check on server if valid
-    // return result by moving to next page or displaying error
-    //console.log(username);
+  const onPressSignup = async () => {
     const data = { username: username, password: password };
-    axios
-      .post(`${URL}/login`, {
-        username,
-        password,
-      })
-      .then((res) => {
-        console.log(res.data);
-        if (res.data.result) {
-          // navigate to next page
-          router.replace({
-            pathname: `/home/${res.data.userID}`,
-            params: { userID: res.data.userID },
-          });
-          console.log("test");
-        } else {
-          // display error message
-        }
-      })
-      .catch((error) => {});
+
+    // perform checks if email is taken / password === cPassword
+
+    if (password === cPassword) {
+      axios
+        .post(`${URL}/signup`, {
+          username,
+          password,
+          email,
+        })
+        .then((res) => {
+          //console.log(res.data);
+          if (res.data.result) {
+            // navigate to next page
+            router.replace({
+              pathname: `/login`,
+            });
+            // console.log("test");
+          } else {
+            // display error message
+          }
+        })
+        .catch((error) => {});
+    }
   };
   return (
     <View style={styles.container}>
@@ -70,11 +73,12 @@ export default function LogInScreen({}) {
           onChangeText={onChangePassword}
           secureTextEntry={true}
         />
-        <Pressable style={styles.button} onPress={onPressLogin}>
+        <Pressable style={styles.button} onPress={onPressSignup}>
           <Text style={styles.buttonText}>SIGNUP</Text>
         </Pressable>
       </View>
     </View>
+    //add email
   );
 }
 
