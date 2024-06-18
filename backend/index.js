@@ -55,21 +55,64 @@ app.post("/transaction", (req, res) => {
   }
 });
 
+app.post("/user/addTransInfo", (req, res) => {
+  const { userID } = req.body;
+  // console.log("test");
+  // console.log("tes1");
+  let user;
+  for (let u of data.users) {
+    if (u.userID == userID) {
+      user = u;
+    }
+  }
+
+  let budgetIDs = new Set(user.budgetIDs);
+  let budgetNames = [];
+  let budgets = {};
+
+  for (let budget of data.budgets) {
+    if (budgetIDs.has(budget.budgetID)) {
+      budgets[budget.budgetID] = budget.budgetName;
+      budgetNames.push(budget.budgetName);
+    }
+  }
+
+  let ret = {
+    budgets: budgets,
+    categorys: ["Rent", "Groceries", "Payment", "Gas"],
+  };
+  console.log(ret);
+  res.json(ret);
+});
+
 app.post("/addTransaction", (req, res) => {
   const { userID, budgetID, categoryID, title, description, amount, date } =
     req.body;
 
   let newTransaction = {
     transactionID: data.transactions.length,
-    userID: userID,
-    budgetID: budgetID,
-    categoryID: categoryID,
+    userID: parseInt(userID),
+    budgetID: parseInt(budgetID),
+    categoryID: parseInt(categoryID),
     title: title,
     description: description,
     amount: amount,
     date: date,
   };
 
+  for (let user of data.users) {
+    if (user.userID == userID) {
+      user.transactionIDs.push(newTransaction.transactionID);
+      break;
+    }
+  }
+  for (let budget of data.budgets) {
+    if (budget.budgetID == budgetID) {
+      budget.transactionIDs.push(newTransaction.transactionID);
+      break;
+    }
+  }
+  console.log(newTransaction);
   data.transactions.push(newTransaction);
 });
 
@@ -151,36 +194,6 @@ app.post("/user/budgets", (req, res) => {
   }
 
   res.json(budgets);
-});
-
-app.post("/user/addTransInfo", (req, res) => {
-  const { userID } = req.body;
-  // console.log("test");
-  // console.log("tes1");
-  let user;
-  for (let u of data.users) {
-    if (u.userID == userID) {
-      user = u;
-    }
-  }
-
-  let budgetIDs = new Set(user.budgetIDs);
-  let budgetNames = [];
-  let budgets = {};
-
-  for (let budget of data.budgets) {
-    if (budgetIDs.has(budget.budgetID)) {
-      budgets[budget.budgetID] = budget.budgetName;
-      budgetNames.push(budget.budgetName);
-    }
-  }
-
-  let ret = {
-    budgets: budgetNames,
-    categorys: ["Rent", "Groceries", "Payment", "Gas"],
-  };
-  console.log(ret);
-  res.json(ret);
 });
 
 app.listen(port, () => {

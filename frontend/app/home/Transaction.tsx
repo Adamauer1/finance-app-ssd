@@ -21,7 +21,7 @@ export default function Transaction({}) {
       .then((res) => {
         //onChangeTransactions(res.data);
         transactions = res.data;
-        console.log(transactions);
+        //console.log(transactions);
       });
   });
 
