@@ -27,7 +27,7 @@ export default function AddTrans() {
   const [categoryID, setCategoryID] = useState(0);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-  const [amount, setAmount] = useState(0);
+  const [amount, setAmount] = useState("0");
   const [date, setDate] = useState(new Date());
   const [budgetNames, setBudgetNames] = useState({});
   const [budgetIDs, setBudgetIDs] = useState<[]>([]);
@@ -130,8 +130,8 @@ export default function AddTrans() {
         <TextInput
           style={styles.input}
           value={amount.toString()}
-          onChangeText={(text) => setAmount(parseFloat(text))}
-          keyboardType="numeric"
+          onChangeText={(text) => setAmount(text)}
+          //keyboardType="numbers-and-punctuation"
         />
       </Layout>
       <Layout style={styles.inputRow}>

@@ -66,7 +66,7 @@ export default function Budget({}) {
       </Link>
 
       <Link
-        href={{ pathname: "/home/View", params: { userID } }}
+        href={{ pathname: "/home/ViewBudget", params: { userID } }}
         style={styles.button}
         asChild
       >

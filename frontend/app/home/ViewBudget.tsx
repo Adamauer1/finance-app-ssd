@@ -4,24 +4,26 @@ import { StyleSheet, Text, View, FlatList, Pressable } from "react-native";
 import { useLocalSearchParams, router } from "expo-router";
 import { URL } from "@/constants/URL";
 
-interface Transaction {
-  transactionID: number;
-  title: string;
-  amount: number;
-  description: string;
-  date: string;
+interface Budget {
+  budgetID: number;
+  budgetName: string;
+  totalAmount: number;
+  startDate: string;
+  endDate: string;
+  numOfUsers: number;
+  numOfTransactions: number;
 }
 
-export default function ViewTrans() {
+export default function ViewBudget() {
   const params = useLocalSearchParams();
   const { userID } = params;
-  const [transactions, setTransactions] = useState<Transaction[]>([]);
+  const [budgets, setBudgets] = useState<Budget[]>([]);
   const [loading, setLoading] = useState(true);
   //let transactions: [] = [];
   //const [transactions, setTransactions] = useState([]);
 
   useEffect(() => {
-    fetchTransactions();
+    fetchBudgets();
   }, []);
 
   // let transactions = [];
@@ -38,11 +40,11 @@ export default function ViewTrans() {
   //     });
   // });
 
-  const fetchTransactions = () => {
+  const fetchBudgets = () => {
     axios
-      .post(`${URL}/user/transactions`, { userID })
+      .post(`${URL}/user/budgets`, { userID })
       .then((res) => {
-        setTransactions(res.data);
+        setBudgets(res.data);
         setLoading(false);
       })
       .catch((error) => {
@@ -52,28 +54,33 @@ export default function ViewTrans() {
       });
   };
 
-  const renderItem = ({ item }: { item: Transaction }) => (
+  const renderItem = ({ item }: { item: Budget }) => (
     <View style={styles.transactionItem}>
-      <Text style={styles.transactionText}>{`Title: ${item.title}`}</Text>
-      <Text style={styles.transactionText}>{`Amount: $${item.amount}`}</Text>
+      <Text style={styles.transactionText}>{`Name: ${item.budgetName}`}</Text>
       <Text
         style={styles.transactionText}
-      >{`Description: ${item.description}`}</Text>
-      <Text style={styles.transactionText}>{`Date: ${new Date(
-        item.date
+      >{`Total Amount: $${item.totalAmount}`}</Text>
+      {/* <Text
+        style={styles.transactionText}
+      >{`Description: ${item.description}`}</Text> */}
+      <Text style={styles.transactionText}>{`Start Date: ${new Date(
+        item.startDate
+      ).toLocaleDateString()}`}</Text>
+      <Text style={styles.transactionText}>{`End Date: ${new Date(
+        item.endDate
       ).toLocaleDateString()}`}</Text>
     </View>
   );
 
   return (
     <View style={styles.container}>
-      <Text style={styles.header}>Transactions</Text>
+      <Text style={styles.header}>Budgets</Text>
       {loading ? (
         <Text>Loading...</Text>
       ) : (
         <FlatList
-          data={transactions}
-          keyExtractor={(item) => item.transactionID.toString()}
+          data={budgets}
+          keyExtractor={(item) => item.budgetID.toString()}
           renderItem={renderItem}
           style={styles.flatList}
         />
