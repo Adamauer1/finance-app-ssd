@@ -66,7 +66,11 @@ export default function Transaction({}) {
         </Pressable>
       </Link>
 
-      <Link href={"/home/View"} style={styles.button} asChild>
+      <Link
+        href={{ pathname: "/home/View", params: { userID } }}
+        style={styles.button}
+        asChild
+      >
         <Pressable>
           <Text style={styles.buttonText}>VIEW</Text>
         </Pressable>

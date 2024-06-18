@@ -153,6 +153,36 @@ app.post("/user/budgets", (req, res) => {
   res.json(budgets);
 });
 
+app.post("/user/addTransInfo", (req, res) => {
+  const { userID } = req.body;
+  // console.log("test");
+  // console.log("tes1");
+  let user;
+  for (let u of data.users) {
+    if (u.userID == userID) {
+      user = u;
+    }
+  }
+
+  let budgetIDs = new Set(user.budgetIDs);
+  let budgetNames = [];
+  let budgets = {};
+
+  for (let budget of data.budgets) {
+    if (budgetIDs.has(budget.budgetID)) {
+      budgets[budget.budgetID] = budget.budgetName;
+      budgetNames.push(budget.budgetName);
+    }
+  }
+
+  let ret = {
+    budgets: budgetNames,
+    categorys: ["Rent", "Groceries", "Payment", "Gas"],
+  };
+  console.log(ret);
+  res.json(ret);
+});
+
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
 });
