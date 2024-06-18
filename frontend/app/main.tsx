@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { View, StyleSheet, Image, Pressable, Text } from "react-native";
 import { Link } from "expo-router";
 import { URL } from "@/constants/URL";
@@ -6,15 +6,20 @@ import axios from "axios";
 
 export default function MainScreen() {
   let userID = 1;
-  useEffect(() => {
-    axios
-      .post(`${URL}/user/budgets`, {
-        userID,
-      })
-      .then((res) => {
-        console.log(res.data);
-      });
-  });
+  // let transactions: [] = [];
+  // const [transactions, setTransactions] = useState([]);
+
+  // useEffect(() => {
+  //   axios
+  //     .post(`${URL}/user/transactions`, {
+  //       userID,
+  //     })
+  //     .then((res) => {
+  //       //console.log(res.data);
+  //       //transactions = res.data;
+  //       setTransactions(res.data);
+  //     });
+  // }, []);
   return (
     <View style={styles.container}>
       <View style={styles.imageContainer}>
@@ -31,7 +36,6 @@ export default function MainScreen() {
           <Text style={styles.buttonText}>LOG IN</Text>
         </Pressable>
       </Link>
-     
     </View>
   );
 }
@@ -59,8 +63,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     shadowColor: "#000",
-    shadowOffset: 
-    {
+    shadowOffset: {
       width: 0,
       height: 2,
     },
@@ -81,7 +84,7 @@ const styles = StyleSheet.create({
     width: 250,
     height: 250,
     // marginRight: 10,
-   // resizeMode: "contain",
+    // resizeMode: "contain",
   },
   imageContainer: {
     flex: 1,

@@ -187,13 +187,14 @@ app.post("/deleteBudget", (req, res) => {
 app.post("/user/transactions", (req, res) => {
   const { userID } = req.body;
   let transactions = [];
-
+  //console.log(userID);
   for (let transaction of data.transactions) {
     //console.log(transaction);
     if (transaction.userID == userID) {
       transactions.push(transaction);
     }
   }
+  //console.log(transactions);
   res.json(transactions);
 });
 

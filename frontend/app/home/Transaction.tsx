@@ -11,19 +11,19 @@ export default function Transaction({}) {
   const params = useLocalSearchParams();
   const { userID } = params;
   // const [transactions, onChangeTransactions] = useState([]);
-  let transactions = [];
-  useEffect(() => {
-    // gets all transaction objects
-    axios
-      .post(`${URL}/user/transactions`, {
-        userID,
-      })
-      .then((res) => {
-        //onChangeTransactions(res.data);
-        transactions = res.data;
-        //console.log(transactions);
-      });
-  });
+  // let transactions = [];
+  // useEffect(() => {
+  //   // gets all transaction objects
+  //   axios
+  //     .post(`${URL}/user/transactions`, {
+  //       userID,
+  //     })
+  //     .then((res) => {
+  //       //onChangeTransactions(res.data);
+  //       transactions = res.data;
+  //       //console.log(transactions);
+  //     });
+  // });
 
   const onPressTransaction = async () => {
     // send post to server with username and password
@@ -67,7 +67,7 @@ export default function Transaction({}) {
       </Link>
 
       <Link
-        href={{ pathname: "/home/View", params: { userID } }}
+        href={{ pathname: "/home/ViewTrans", params: { userID } }}
         style={styles.button}
         asChild
       >
@@ -75,6 +75,9 @@ export default function Transaction({}) {
           <Text style={styles.buttonText}>VIEW</Text>
         </Pressable>
       </Link>
+      {/* <Pressable style={styles.button} onPress={onPressViewTransactions}>
+        <Text style={styles.buttonText}>VIEW</Text>
+      </Pressable> */}
 
       <Link href={"/home/Delete"} style={styles.button} asChild>
         <Pressable>

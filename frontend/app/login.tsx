@@ -1,5 +1,5 @@
 import axios from "axios";
-import { router } from "expo-router";
+import { router, useLocalSearchParams } from "expo-router";
 import { useState } from "react";
 import {
   Pressable,
@@ -12,13 +12,14 @@ import {
 import { URL } from "@/constants/URL";
 // const URL = "192.168.6.109";
 export default function LogInScreen({}) {
+  //const params = useLocalSearchParams();
+  //const { transactions } = params;
   const [username, onChangeUsername] = useState("");
   const [password, onChangePassword] = useState("");
 
   axios.get(`${URL}/users`).then((res) => {
-    console.log(res.data);
+    //console.log(res.data);
   });
-
   const onPressLogin = async () => {
     // send post to server with username and password
     // check on server if valid

@@ -1,48 +1,58 @@
-import React, { useEffect, useState } from 'react';
-import { View, Text, FlatList, StyleSheet } from 'react-native';
-import axios from 'axios';
+import React, { useEffect, useState } from "react";
+import { View, Text, FlatList, StyleSheet } from "react-native";
+import { Divider, List, ListItem } from "@ui-kitten/components";
+import { useLocalSearchParams } from "expo-router";
+import axios from "axios";
+import { URL } from "@/constants/URL";
 
-const URL = "http://192.168.6.109";
+interface Transaction {
+  transactionID: number;
+  userID: number;
+  budgetID: number;
+  categoryID: number;
+  title: string;
+  description: string;
+  amount: number;
+  date: string;
+}
 
 export default function ViewTransactionScreen() {
-  const [transactions, setTransactions] = useState([]);
+  const params = useLocalSearchParams();
+  const { userID } = params;
+  //console.log(userID);
+  //console.log(transactions);
+  //const [transactions, setTransactions] = useState([]);
   const [loading, setLoading] = useState(true);
+  //let transactions: [] = [];
+  const [transactions, setTransactions] = useState([]);
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get(URL);
-        setTransactions(response.data);
-      } catch (error) {
-        console.error(error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchData();
+    axios
+      .post(`${URL}/user/transactions`, {
+        userID,
+      })
+      .then((res) => {
+        //console.log(res.data);
+        //transactions = res.data;
+        setTransactions(res.data);
+        //console.log(transactions);
+      });
   }, []);
 
-  if (loading) {
-    return (
-      <View style={styles.container}>
-        <Text style={styles.text}>Loading...</Text>
-      </View>
-    );
-  }
+  const renderItem = ({ item }: { item: Transaction }) => {
+    //console.log(item);
+    //return <Text>Test</Text>;
+    console.log(item.title);
+    return <ListItem title={item.title} description={item.amount} />;
+  };
 
   return (
     <View style={styles.container}>
-      <FlatList
+      <List
+        style={styles.container}
         data={transactions}
-        keyExtractor={(item) => item.transactionID.toString()}
-        renderItem={({ item }) => (
-          <View style={styles.item}>
-            <Text style={styles.text}>Title: {item.title}</Text>
-            <Text style={styles.text}>Amount: {item.amount}</Text>
-            <Text style={styles.text}>Date: {item.date}</Text>
-          </View>
-        )}
+        ItemSeparatorComponent={Divider}
+        renderItem={renderItem}
       />
     </View>
   );
@@ -50,18 +60,19 @@ export default function ViewTransactionScreen() {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'black',
+    width: "100%",
+    height: "100%",
+    // justifyContent: "center",
+    // alignItems: "center",
+    backgroundColor: "black",
   },
   text: {
-    color: 'white',
+    color: "white",
   },
   item: {
     padding: 10,
     marginVertical: 8,
-    backgroundColor: '#333',
+    backgroundColor: "#333",
     borderRadius: 5,
   },
 });
