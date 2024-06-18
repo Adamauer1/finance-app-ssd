@@ -25,27 +25,16 @@ export default function LogInScreen({}) {
     const data = { username: username, password: password };
 
     // perform checks if email is taken / password === cPassword
-
-    if (password === cPassword) {
-      axios
-        .post(`${URL}/signup`, {
-          username,
-          password,
-          email,
-        })
-        .then((res) => {
-          //console.log(res.data);
-          if (res.data.result) {
-            // navigate to next page
-            router.replace({
-              pathname: `/login`,
-            });
-            // console.log("test");
-          } else {
-            // display error message
-          }
-        })
-        .catch((error) => {});
+    if (password == cPassword) {
+      console.log("test");
+      axios.post(`${URL}/signup`, {
+        username,
+        password,
+        email,
+      });
+      router.replace({
+        pathname: `/`,
+      });
     }
   };
   return (
@@ -69,9 +58,15 @@ export default function LogInScreen({}) {
         <Text style={styles.text}>CONFIRM PASSWORD</Text>
         <TextInput
           style={styles.input}
-          value={password}
-          onChangeText={onChangePassword}
+          value={cPassword}
+          onChangeText={onChangeCPassword}
           secureTextEntry={true}
+        />
+        <Text style={styles.text}>EMAIL</Text>
+        <TextInput
+          style={styles.input}
+          value={email}
+          onChangeText={onChangeEmail}
         />
         <Pressable style={styles.button} onPress={onPressSignup}>
           <Text style={styles.buttonText}>SIGNUP</Text>

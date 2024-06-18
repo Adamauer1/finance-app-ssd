@@ -12,6 +12,10 @@ app.get("/", (req, res) => {
   //res.json(data);
 });
 
+app.get("/users", (req, res) => {
+  res.json(data.users);
+});
+
 app.post("/login", (req, res) => {
   const { username, password } = req.body;
   // console.log(username);
@@ -34,7 +38,7 @@ app.post("/signup", (req, res) => {
 
   //let userID = data.users.length;
   let newUser = {
-    userID: data.users.length,
+    userID: data.users.length + 1,
     username: username,
     email: email,
     password: password,

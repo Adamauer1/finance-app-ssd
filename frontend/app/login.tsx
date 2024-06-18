@@ -14,6 +14,11 @@ import { URL } from "@/constants/URL";
 export default function LogInScreen({}) {
   const [username, onChangeUsername] = useState("");
   const [password, onChangePassword] = useState("");
+
+  axios.get(`${URL}/users`).then((res) => {
+    console.log(res.data);
+  });
+
   const onPressLogin = async () => {
     // send post to server with username and password
     // check on server if valid
