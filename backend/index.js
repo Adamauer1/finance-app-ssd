@@ -57,8 +57,6 @@ app.post("/transaction", (req, res) => {
 
 app.post("/user/addTransInfo", (req, res) => {
   const { userID } = req.body;
-  // console.log("test");
-  // console.log("tes1");
   let user;
   for (let u of data.users) {
     if (u.userID == userID) {
@@ -90,7 +88,7 @@ app.post("/addTransaction", (req, res) => {
     req.body;
 
   let newTransaction = {
-    transactionID: data.transactions.length,
+    transactionID: data.transactions.length + 1,
     userID: parseInt(userID),
     budgetID: parseInt(budgetID),
     categoryID: parseInt(categoryID),
@@ -150,7 +148,28 @@ app.post("/budget", (req, res) => {
 });
 
 app.post("/addBudget", (req, res) => {
-  const { budgetID } = req.body;
+  const { userID, budgetName, totalAmount, startDate, endDate } = req.body;
+
+  let userIDs = [];
+  userIDs.push(parseInt(userID));
+  let newBudget = {
+    budgetID: data.budgets.length + 1,
+    budgetName: budgetName,
+    totalAmount: parseFloat(totalAmount),
+    startDate: startDate,
+    endDate: endDate,
+    userIDs: userIDs,
+    transactionIDs: [],
+  };
+
+  for (let user of data.users) {
+    if (user.userID == userID) {
+      user.budgetIDs.push(newBudget.budgetID);
+      break;
+    }
+  }
+  console.log(newBudget);
+  data.budgets.push(newBudget);
 });
 
 app.post("/editBudget", (req, res) => {

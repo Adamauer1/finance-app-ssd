@@ -6,7 +6,8 @@ export default function HomeLayout() {
       {/* <Stack.Screen name="(tabs)" options={{ headerShown: false }} /> */}
       <Stack.Screen name="[id]" options={{ headerShown: false }} />
       <Stack.Screen name="AddTrans" options={{ headerShown: false }} />
-      {/* <Stack.Screen name="Budget" options={{ headerShown: false }} /> */}
+      <Stack.Screen name="Budget" options={{ headerShown: false }} />
+      <Stack.Screen name="AddBudget" options={{ headerShown: false }} />
       <Stack.Screen name="Transaction" options={{ headerShown: false }} />
     </Stack>
   );

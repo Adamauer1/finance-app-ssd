@@ -22,77 +22,53 @@ import {
 export default function AddBudget() {
   const params = useLocalSearchParams();
   const { userID } = params;
-  const [budgetID, setBudgetID] = useState(0);
-  const [categoryID, setCategoryID] = useState(0);
+  const [budgetName, setBudgetName] = useState("");
   const [totalAmount, settotalAmount] = useState(0);
   const [startDate, setstartDate] = useState(new Date());
   const [endDate, setendDate] = useState(new Date());
-  const [budgetNames, setBudgetNames] = useState({});
-  const [budgetIDs, setBudgetIDs] = useState<[]>([]);
-  const [categoryIDs, setCategoryIDs] = useState<[]>([]);
- // const [categoryNames, setCategoryNames] = useState([]);
-  const [selectedBudgetIndex, setSelectedBudgetIndex] = useState<
-    IndexPath | IndexPath[]
-  >(new IndexPath(0));
-  const [selectedCategoryIndex, setSelectedCategoryIndex] = useState<
-    IndexPath | IndexPath[]
-  >(new IndexPath(0));
-
-  useEffect(() => {
-    // gets all budget objects
-    axios
-      .post(`${URL}/user/addBudgetInfo`, {
-        userID,
-      })
-      .then((res) => {
-        setBudgetNames(res.data.budgets);
-        const budgetKeys: number[] = Object.keys(res.data.budgets).map((key) =>
-          parseInt(key)
-        );
-        //still works just a typescript type error
-        // @ts-ignore comment
-        setBudgetIDs(budgetKeys);
-        setBudgetID(budgetKeys[0]);
-      //  setCategoryNames(res.data.categorys);
-      //  const categoryKeys = Object.keys(res.data.categorys).map((key) =>
-     //     parseInt(key)
-     //   );
-        //still works just a typescript type error
-        // @ts-ignore comment
-      //  setCategoryIDs(categoryKeys);
-      //  setCategoryID(categoryKeys[0]);
-        //console.log(budgetIDs);
-      });
-  }, []);
+  // useEffect(() => {
+  //   // gets all budget objects
+  //   axios
+  //     .post(`${URL}/user/addBudgetInfo`, {
+  //       userID,
+  //     })
+  //     .then((res) => {
+  //       setBudgetNames(res.data.budgets);
+  //       const budgetKeys: number[] = Object.keys(res.data.budgets).map((key) =>
+  //         parseInt(key)
+  //       );
+  //       //still works just a typescript type error
+  //       // @ts-ignore comment
+  //       setBudgetIDs(budgetKeys);
+  //       setBudgetID(budgetKeys[0]);
+  //     //  setCategoryNames(res.data.categorys);
+  //     //  const categoryKeys = Object.keys(res.data.categorys).map((key) =>
+  //    //     parseInt(key)
+  //    //   );
+  //       //still works just a typescript type error
+  //       // @ts-ignore comment
+  //     //  setCategoryIDs(categoryKeys);
+  //     //  setCategoryID(categoryKeys[0]);
+  //       //console.log(budgetIDs);
+  //     });
+  // }, []);
 
   const onPressAddBudget = () => {
     //console.log(date);
     axios.post(`${URL}/addBudget`, {
       userID,
-      budgetID,
-      //categoryID,
-      //title,
-      //description,
-      budgetNames,
+      budgetName,
       totalAmount,
       startDate,
       endDate,
     });
 
     router.back();
+
     // router.replace({
     //   pathname: `/home/Transaction`,
     //   params: { userID: userID },
     // });
-  };
-
-  const buildNameList = (data: {}, ids: []) => {
-    // return budgetIDs.map((id) => {
-    //   return <SelectItem title={budgetNames[id]} key={id} />;
-    // });
-    return ids.map((id) => {
-      return <SelectItem title={data[id]} key={id} />;
-    });
   };
 
   return (
@@ -104,22 +80,11 @@ export default function AddBudget() {
       <Text style={styles.TEXT1}>ADD BUDGET</Text>
       <Layout style={styles.inputRow}>
         <Text style={styles.text}>Budget Name:</Text>
-        <Select
-          style={styles.select}
-          selectedIndex={selectedBudgetIndex}
-          onSelect={(index) => {
-            console.log(budgetIDs[(index as IndexPath).row]);
-            setSelectedBudgetIndex(index);
-            setBudgetID(budgetIDs[(index as IndexPath).row]);
-          }}
-          value={
-            selectedBudgetIndex
-              ? budgetNames[budgetIDs[(selectedBudgetIndex as IndexPath).row]]
-              : "Select an option"
-          }
-        >
-          {buildNameList(budgetNames, budgetIDs)}
-        </Select>
+        <TextInput
+          style={styles.input}
+          value={budgetName}
+          onChangeText={(text) => setBudgetName(text)}
+        />
       </Layout>
       <Layout style={styles.inputRow}>
         <Text style={styles.text}>Total Amount:</Text>
@@ -130,16 +95,22 @@ export default function AddBudget() {
           keyboardType="numeric"
         />
       </Layout>
-      
+
       <Layout style={styles.inputRow}>
         <Text style={styles.text}>Start Date</Text>
         {/* <TextInput style={styles.input} value={date} onChangeText={setDate} /> */}
-        <Datepicker date={startDate} onSelect={(nextDate) => setstartDate(nextDate)} />
+        <Datepicker
+          date={startDate}
+          onSelect={(nextDate) => setstartDate(nextDate)}
+        />
       </Layout>
-      
+
       <Layout style={styles.inputRow}>
         <Text style={styles.text}>End Date</Text>
-        <Datepicker date={endDate} onSelect={(nextDate) => setendDate(nextDate)} />
+        <Datepicker
+          date={endDate}
+          onSelect={(nextDate) => setendDate(nextDate)}
+        />
       </Layout>
 
       <Pressable style={styles.button} onPress={onPressAddBudget}>

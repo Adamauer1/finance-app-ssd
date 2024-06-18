@@ -11,17 +11,17 @@ export default function Budget({}) {
   const params = useLocalSearchParams();
   const { userID } = params;
   // const [transactions, onChangeTransactions] = useState([]);
-  let transactions = [];
+  let budgets = [];
   useEffect(() => {
     // gets all transaction objects
     axios
-      .post(`${URL}/user/budget`, {
+      .post(`${URL}/user/budgets`, {
         userID,
       })
       .then((res) => {
         //onChangeTransactions(res.data);
-        transactions = res.data;
-        //console.log(transactions);
+        budgets = res.data;
+        //console.log(budgets);
       });
   });
 
@@ -36,14 +36,13 @@ export default function Budget({}) {
         userID,
       })
       .then((res) => {
-        console.log(res.data);
+        //console.log(res.data);
         if (res.data.result) {
           // navigate to next page
           router.replace({
             pathname: `/home/${res.data.userID}`,
             //  params: { userID: res.data.userID },
           });
-          console.log("test");
         } else {
           // display error message
         }
@@ -149,7 +148,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
     fontWeight: "bold",
     position: "absolute",
-    top: 15,
+    top: 45,
     color: "#afee",
   },
 
