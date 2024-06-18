@@ -1,8 +1,8 @@
-import axios from 'axios';
-import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View, FlatList, Pressable } from 'react-native';
-import { useLocalSearchParams, router } from 'expo-router';
-import { URL } from '@/constants/URL';
+import axios from "axios";
+import React, { useState, useEffect } from "react";
+import { StyleSheet, Text, View, FlatList, Pressable } from "react-native";
+import { useLocalSearchParams, router } from "expo-router";
+import { URL } from "@/constants/URL";
 
 interface Transaction {
   transactionID: number;
@@ -22,28 +22,47 @@ export default function ViewTrans() {
     fetchTransactions();
   }, []);
 
+  // let transactions = [];
+  // useEffect(() => {
+  //   // gets all transaction objects
+  //   axios
+  //     .post(`${URL}/user/transactions`, {
+  //       userID,
+  //     })
+  //     .then((res) => {
+  //       //onChangeTransactions(res.data);
+  //       transactions = res.data;
+  //       console.log(transactions);
+  //     });
+  // });
+
   const fetchTransactions = () => {
-    axios.post(`${URL}/getTransactions`, { userID })
+    axios
+      .post(`${URL}/user/transactions`, { userID })
       .then((res) => {
-        setTransactions(res.data.transactions);
+        setTransactions(res.data);
         setLoading(false);
       })
       .catch((error) => {
-        console.error('Error fetching transactions:', error);
-        alert('Failed to fetch transactions');
+        console.error("Error fetching transactions:", error);
+        alert("Failed to fetch transactions");
         setLoading(false);
       });
-  }; 
+  };
 
   const renderItem = ({ item }: { item: Transaction }) => (
     <View style={styles.transactionItem}>
       <Text style={styles.transactionText}>{`Title: ${item.title}`}</Text>
       <Text style={styles.transactionText}>{`Amount: $${item.amount}`}</Text>
-      <Text style={styles.transactionText}>{`Description: ${item.description}`}</Text>
-      <Text style={styles.transactionText}>{`Date: ${new Date(item.date).toLocaleDateString()}`}</Text>
+      <Text
+        style={styles.transactionText}
+      >{`Description: ${item.description}`}</Text>
+      <Text style={styles.transactionText}>{`Date: ${new Date(
+        item.date
+      ).toLocaleDateString()}`}</Text>
     </View>
   );
-    
+
   return (
     <View style={styles.container}>
       <Text style={styles.header}>Transactions</Text>
@@ -67,45 +86,45 @@ export default function ViewTrans() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'black',
-    justifyContent: 'center',
-    alignItems: 'center',
+    backgroundColor: "black",
+    justifyContent: "center",
+    alignItems: "center",
     padding: 20,
   },
   header: {
     fontSize: 24,
-    fontWeight: 'bold',
-    color: '#afee',
+    fontWeight: "bold",
+    color: "#afee",
     marginBottom: 20,
   },
   button: {
     width: 300,
     height: 50,
     padding: 10,
-    backgroundColor: '#afee',
+    backgroundColor: "#afee",
     marginTop: 20,
     borderRadius: 25,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
   },
   buttonText: {
-    color: 'black',
+    color: "black",
     fontSize: 20,
-    fontWeight: 'bold',
+    fontWeight: "bold",
   },
   transactionItem: {
-    backgroundColor: '#fff',
+    backgroundColor: "#fff",
     padding: 10,
     marginBottom: 10,
     borderRadius: 5,
-    width: '100%',
+    width: "100%",
   },
   transactionText: {
     fontSize: 16,
-    color: '#000',
+    color: "#000",
     marginBottom: 5,
   },
   flatList: {
-    width: '100%',
+    width: "100%",
   },
 });

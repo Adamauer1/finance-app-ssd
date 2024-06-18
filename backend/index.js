@@ -105,22 +105,24 @@ app.post("/addTransaction", (req, res) => {
       break;
     }
   }
-    //view trans//////////////
+  //view trans//////////////
   let transactions = {
-    
     title: title,
     description: description,
     amount: amount,
     date: date,
-  }
+  };
 
-// Endpoint to fetch transactions based on userID
-app.post('/getTransactions', (req, res) => {
-  const { userID } = req.body;
-  const userTransactions = transactions.filter(transaction => transaction.userID === userID);
-  res.json({ transactions: userTransactions });
-});
-////////////
+  // Endpoint to fetch transactions based on userID
+  app.post("/getTransactions", (req, res) => {
+    const { userID } = req.body;
+    const userTransactions = transactions.filter(
+      (transaction) => transaction.userID === userID
+    );
+    console.log("test");
+    res.json({ transactions: userTransactions });
+  });
+  ////////////
   for (let budget of data.budgets) {
     if (budget.budgetID == budgetID) {
       budget.transactionIDs.push(newTransaction.transactionID);
