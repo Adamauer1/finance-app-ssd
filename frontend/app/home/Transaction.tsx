@@ -67,7 +67,7 @@ export default function Transaction({}) {
       </Link>
 
       <Link
-        href={{ pathname: "/home/View", params: { userID } }}
+        href={{ pathname: "/home/ViewTrans", params: { userID } }}
         style={styles.button}
         asChild
       >
