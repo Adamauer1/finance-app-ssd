@@ -8,27 +8,30 @@ import {
   TextInput,
   View,
 } from "react-native";
-import { useLocalSearchParams } from "expo-router";
+import { router, useLocalSearchParams } from "expo-router";
 import { URL } from "@/constants/URL";
-import { IndexPath, Layout, Select, SelectItem } from "@ui-kitten/components";
+import {
+  IndexPath,
+  Layout,
+  Select,
+  SelectItem,
+  Datepicker,
+} from "@ui-kitten/components";
 //const URL = ' 192.168.6.109'; // Your server IP
-
-interface BudgetInfo {}
-
-interface CategoryInfo {}
 
 export default function AddTrans() {
   const params = useLocalSearchParams();
   const { userID } = params;
-  const [isLoading, setIsLoading] = useState(true);
-  //const [userID, setUserID] = useState("");
-  const [budgetID, setBudgetID] = useState("");
-  const [categoryID, setCategoryID] = useState("");
+  //const [isLoading, setIsLoading] = useState(true);
+  const [budgetID, setBudgetID] = useState(0);
+  const [categoryID, setCategoryID] = useState(0);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-  const [amount, setAmount] = useState("");
-  const [date, setDate] = useState("");
-  const [budgetNames, setBudgetNames] = useState([]);
+  const [amount, setAmount] = useState(0);
+  const [date, setDate] = useState(new Date());
+  const [budgetNames, setBudgetNames] = useState({});
+  const [budgetIDs, setBudgetIDs] = useState<[]>([]);
+  const [categoryIDs, setCategoryIDs] = useState<[]>([]);
   const [categoryNames, setCategoryNames] = useState([]);
   const [selectedBudgetIndex, setSelectedBudgetIndex] = useState<
     IndexPath | IndexPath[]
@@ -36,6 +39,7 @@ export default function AddTrans() {
   const [selectedCategoryIndex, setSelectedCategoryIndex] = useState<
     IndexPath | IndexPath[]
   >(new IndexPath(0));
+
   useEffect(() => {
     // gets all transaction objects
     axios
@@ -43,54 +47,53 @@ export default function AddTrans() {
         userID,
       })
       .then((res) => {
-        //budgetIDs = res.data;
         setBudgetNames(res.data.budgets);
+        const budgetKeys: number[] = Object.keys(res.data.budgets).map((key) =>
+          parseInt(key)
+        );
+        //still works just a typescript type error
+        // @ts-ignore comment
+        setBudgetIDs(budgetKeys);
+        setBudgetID(budgetKeys[0]);
         setCategoryNames(res.data.categorys);
+        const categoryKeys = Object.keys(res.data.categorys).map((key) =>
+          parseInt(key)
+        );
+        //still works just a typescript type error
+        // @ts-ignore comment
+        setCategoryIDs(categoryKeys);
+        setCategoryID(categoryKeys[0]);
         //console.log(budgetIDs);
       });
-    // .finally(() => {
-    //   setIsLoading(false);
-    // });
   }, []);
 
-  const onPressAddTransaction = async () => {
-    try {
-      const response = await axios.post(`${URL}/addTransaction`, {
-        userID,
-        budgetID,
-        categoryID,
-        title,
-        description,
-        amount,
-        date,
-      });
-      console.log("Transaction ID:", response.data.transactionID);
-      console.log("Transaction ID:", response.data.userID);
-      console.log("Transaction ID:", response.data.budgetID);
-    } catch (error) {
-      console.error(error);
-    }
+  const onPressAddTransaction = () => {
+    //console.log(date);
+    axios.post(`${URL}/addTransaction`, {
+      userID,
+      budgetID,
+      categoryID,
+      title,
+      description,
+      amount,
+      date,
+    });
+
+    router.back();
+    // router.replace({
+    //   pathname: `/home/Transaction`,
+    //   params: { userID: userID },
+    // });
   };
 
-  const buildNameList = (names: number[]) => {
-    return names.map((id) => {
-      return <SelectItem title={id} key={id} />;
+  const buildNameList = (data: {}, ids: []) => {
+    // return budgetIDs.map((id) => {
+    //   return <SelectItem title={budgetNames[id]} key={id} />;
+    // });
+    return ids.map((id) => {
+      return <SelectItem title={data[id]} key={id} />;
     });
   };
-
-  // const buildBudgetNameList = () => {
-  //   //console.log(budgetIDs);
-  //   return budgetNames.map((name) => {
-  //     console.log(name);
-  //     return <SelectItem title={name} key={name} />;
-  //   });
-  // };
-
-  // const buildCategoryNameList = () => {
-  //   return categoryNames.map((name) => {
-  //     return <SelectItem title={name} key={name} />;
-  //   });
-  // };
 
   return (
     <View style={styles.container}>
@@ -104,14 +107,18 @@ export default function AddTrans() {
         <Select
           style={styles.select}
           selectedIndex={selectedBudgetIndex}
-          onSelect={(index) => setSelectedBudgetIndex(index)}
+          onSelect={(index) => {
+            console.log(budgetIDs[(index as IndexPath).row]);
+            setSelectedBudgetIndex(index);
+            setBudgetID(budgetIDs[(index as IndexPath).row]);
+          }}
           value={
             selectedBudgetIndex
-              ? budgetNames[(selectedBudgetIndex as IndexPath).row]
+              ? budgetNames[budgetIDs[(selectedBudgetIndex as IndexPath).row]]
               : "Select an option"
           }
         >
-          {buildNameList(budgetNames)}
+          {buildNameList(budgetNames, budgetIDs)}
         </Select>
       </Layout>
       <Layout style={styles.inputRow}>
@@ -122,8 +129,8 @@ export default function AddTrans() {
         <Text style={styles.text}>Amount:</Text>
         <TextInput
           style={styles.input}
-          value={amount}
-          onChangeText={setAmount}
+          value={amount.toString()}
+          onChangeText={(text) => setAmount(parseFloat(text))}
           keyboardType="numeric"
         />
       </Layout>
@@ -132,19 +139,26 @@ export default function AddTrans() {
         <Select
           style={styles.select}
           selectedIndex={selectedCategoryIndex}
-          onSelect={(index) => setSelectedCategoryIndex(index)}
+          onSelect={(index) => {
+            console.log(categoryIDs[(index as IndexPath).row]);
+            setCategoryID(categoryIDs[(index as IndexPath).row]);
+            setSelectedCategoryIndex(index);
+          }}
           value={
             selectedCategoryIndex
-              ? categoryNames[(selectedCategoryIndex as IndexPath).row]
+              ? categoryNames[
+                  categoryIDs[(selectedCategoryIndex as IndexPath).row]
+                ]
               : "Select an option"
           }
         >
-          {buildNameList(categoryNames)}
+          {buildNameList(categoryNames, categoryIDs)}
         </Select>
       </Layout>
       <Layout style={styles.inputRow}>
         <Text style={styles.text}>Date</Text>
-        <TextInput style={styles.input} value={date} onChangeText={setDate} />
+        {/* <TextInput style={styles.input} value={date} onChangeText={setDate} /> */}
+        <Datepicker date={date} onSelect={(nextDate) => setDate(nextDate)} />
       </Layout>
       <Layout style={styles.inputRow}>
         <Text style={styles.text}>Description</Text>
