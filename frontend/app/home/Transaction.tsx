@@ -122,7 +122,19 @@ const styles = StyleSheet.create({
     textAlign:'center',
     fontWeight: "bold",
     color: "#999",
+<<<<<<< Updated upstream
     top:100,
+=======
+    top: 100,
+  },
+  TEXT1: {
+    fontSize: 35,
+    textAlign: "center",
+    fontWeight: "bold",
+    position: "absolute",
+    top: 45,
+    color: "#afee",
+>>>>>>> Stashed changes
   },
   TEXT1 :
   {

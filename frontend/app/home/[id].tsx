@@ -115,7 +115,19 @@ const styles = StyleSheet.create({
     textAlign:'center',
     fontWeight: "bold",
     color: "#999",
+<<<<<<< Updated upstream
     top:100,
+=======
+    top: 200,
+  },
+  TEXT1: {
+    fontSize: 35,
+    textAlign: "center",
+    fontWeight: "bold",
+    position: "absolute",
+    top: 75,
+    color: "#afee",
+>>>>>>> Stashed changes
   },
   TEXT1 :
   {
@@ -134,7 +146,7 @@ const styles = StyleSheet.create({
   },
   image: {
     width: 250,
-    height: 250,
+    height: 200,
     // marginRight: 10,
     resizeMode: "contain",
   },

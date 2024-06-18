@@ -36,6 +36,7 @@ export default function AddTrans() {
       <Image source={require('@/images/Main.png')} style={styles.image} />
       </View>
       <Text style={styles.TEXT1}>ADD TRANSACTION</Text>
+<<<<<<< Updated upstream
 
       <Text style={styles.text}>Title</Text>
       <TextInput
@@ -62,6 +63,64 @@ export default function AddTrans() {
         value={date}
         onChangeText={setDate}
       />
+=======
+      <Layout style={styles.inputRow}>
+        <Text style={styles.text}>Budget:</Text>
+        <Select
+          style={styles.select}
+          selectedIndex={selectedBudgetIndex}
+          onSelect={(index) => setSelectedBudgetIndex(index)}
+          value={
+            selectedBudgetIndex
+              ? budgetNames[(selectedBudgetIndex as IndexPath).row]
+              : "Select an option"
+          }
+        >
+          {buildNameList(budgetNames)}
+        </Select>
+      </Layout>
+      <Layout style={styles.inputRow}>
+        <Text style={styles.text}>Title:</Text>
+        <TextInput style={styles.input} value={title} onChangeText={setTitle} />
+      </Layout>
+      <Layout style={styles.inputRow}>
+        <Text style={styles.text}>Amount:</Text>
+        <TextInput
+          style={styles.input}
+          value={amount}
+          onChangeText={setAmount}
+          keyboardType="numeric"
+        />
+      </Layout>
+      <Layout style={styles.inputRow}>
+        <Text style={styles.text}>Category:</Text>
+        <Select
+          style={styles.select}
+          selectedIndex={selectedCategoryIndex}
+          onSelect={(index) => setSelectedCategoryIndex(index)}
+          value={
+            selectedCategoryIndex
+              ? categoryNames[(selectedCategoryIndex as IndexPath).row]
+              : "Select an option"
+          }
+        >
+          {buildNameList(categoryNames)}
+        </Select>
+      </Layout>
+      <Layout style={styles.inputRow}>
+        <Text style={styles.text}>Date</Text>
+        <TextInput style={styles.input} value={date} onChangeText={setDate} />
+    
+    </Layout>
+      <Layout style={styles.inputRow}>
+        <Text style={styles.text}>Description</Text>
+        <TextInput
+          style={styles.input}
+          value={description}
+          onChangeText={setDescription}
+        />
+      </Layout>
+>>>>>>> Stashed changes
       <Pressable style={styles.button} onPress={onPressAddTransaction}>
         <Text style={styles.buttonText}>Add Transaction</Text>
       </Pressable>
