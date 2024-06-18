@@ -52,6 +52,7 @@ export default function AddTrans() {
           parseInt(key)
         );
         //still works just a typescript type error
+        // @ts-ignore comment
         setBudgetIDs(budgetKeys);
         setBudgetID(budgetKeys[0]);
         setCategoryNames(res.data.categorys);
@@ -59,6 +60,7 @@ export default function AddTrans() {
           parseInt(key)
         );
         //still works just a typescript type error
+        // @ts-ignore comment
         setCategoryIDs(categoryKeys);
         setCategoryID(categoryKeys[0]);
         //console.log(budgetIDs);
