@@ -6,14 +6,14 @@ import { Image, Pressable, StyleSheet, Text, View } from "react-native";
 export default function Stats({}) {
   const params = useLocalSearchParams();
   const { userID } = params;
-  
+
   return (
     <View style={styles.container}>
       <View style={styles.imageContainer}>
         <Image source={require("@/images/Main.png")} style={styles.image} />
       </View>
-      <Text style={styles.TEXT1}>HELLO - USER {userID}</Text>
-      
+      {/* <Text style={styles.TEXT1}>HELLO - USER {userID}</Text> */}
+
       <Text style={styles.TEXT2}>STATISTICS</Text>
       <Link
         href={{ pathname: "home/TransactionStatistics", params: { userID } }}
@@ -34,7 +34,6 @@ export default function Stats({}) {
           <Text style={styles.buttonText}>BUDGET</Text>
         </Pressable>
       </Link>
-      
     </View>
   );
 }

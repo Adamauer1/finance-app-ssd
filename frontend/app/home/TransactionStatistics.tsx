@@ -3,11 +3,12 @@ import axios from "axios";
 import { useLocalSearchParams } from "expo-router";
 import React, { useEffect, useState } from "react";
 import { Dimensions, FlatList, StyleSheet, Text, View } from "react-native";
-import { BarChart } from 'react-native-chart-kit';
+import { BarChart } from "react-native-chart-kit";
+import { Svg, Line } from "react-native-svg";
 import Transaction from "./Transaction";
 
 interface Transaction {
-  categoryID : number,
+  categoryID: number;
   transactionID: number;
   title: string;
   amount: number;
@@ -21,13 +22,16 @@ export default function TransactionStatistics() {
   const [transactions, setTransactions] = useState<Transaction[]>([]);
   const [loading, setLoading] = useState(true);
   //chart
-  const [chartData, setChartData] = useState<{ labels: string[]; datasets: { data: number[] }[] }>({ labels: [], datasets: [{ data: [] }] });
-  
+  const [chartData, setChartData] = useState<{
+    labels: string[];
+    datasets: { data: number[] }[];
+  }>({ labels: [], datasets: [{ data: [] }] });
+
   useEffect(() => {
     fetchTransactions();
   }, []);
 
-   const fetchTransactions = () => {
+  const fetchTransactions = () => {
     axios
       .post(`${URL}/user/transactions`, { userID })
       .then((res) => {
@@ -42,20 +46,35 @@ export default function TransactionStatistics() {
   };
   // bar chart
   const prepareChartData = () => {
-  const labels: string[] = [];
-  const data: number[] = [];
+    const labels: string[] = [];
+    const data: number[] = [];
+    const colors: ((opacity?: number) => string)[] = [];
+    transactions.forEach((transaction) => {
+      labels.push(transaction.title);
+      data.push(transaction.amount);
+      colors.push(
+        transaction.amount < 0
+          ? (opacity = 100) => `rgba(179, 10, 13, ${opacity})`
+          : (opacity = 100) => `rgba(10, 179, 13, ${opacity})`
+      );
+      console.log("title:", transaction.title);
+      // console.log(
+      //   "Color: ",
+      //   transaction.amount < 0 ? `rgba(179, 10, 13, 1)` : `rgba(10, 179, 13, 1)`
+      // );
+    });
 
-  transactions.forEach(transaction => {
-    labels.push(transaction.title);
-    data.push(transaction.amount);
-    console.log ('title:', transaction.title);
-
-  });
- 
-      return ({ labels, datasets: [{ data }] });
-      
+    return {
+      labels,
+      datasets: [
+        {
+          data: data,
+          colors: colors,
+        },
+      ],
+    };
   };
-///////
+  ///////
 
   return (
     <View style={styles.container}>
@@ -97,9 +116,43 @@ export default function TransactionStatistics() {
      
   </View>
 );
+      <Text style={styles.header}>TRANSACTION STATISTICS</Text>
+      {loading ? (
+        <Text>Loading...</Text>
+      ) : (
+        <BarChart
+          data={prepareChartData()}
+          width={Dimensions.get("window").width - 20}
+          height={220}
+          yAxisLabel="$"
+          yAxisSuffix="" // Add this line to fix the error
+          chartConfig={{
+            backgroundColor: "#1cc910",
+            backgroundGradientFrom: "#eff3ff",
+            backgroundGradientTo: "#efefef",
+            decimalPlaces: 2,
+            //color: (opacity = 100) => `rgba(10, 179, 13, ${opacity})`,
+            color: (opacity = 100) => `rgba(0, 0, 0, ${opacity})`,
+            style: {
+              borderRadius: 16,
+            },
+          }}
+          withCustomBarColorFromData={true}
+          flatColor={true}
+          fromZero={true}
+          showBarTops={true}
+          style={{
+            marginVertical: 8,
+            borderRadius: 16,
+          }}
+        />
+
+        // </View>
+      )}
+    </View>
+  );
 }
 
- 
 const styles = StyleSheet.create({
   container: {
     flex: 1,

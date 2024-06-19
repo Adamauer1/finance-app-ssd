@@ -11,10 +11,13 @@ This is the frontend and backend of the Finance App for the class SSD
 npm install
 ```
 
-2. You will have to find your localhost ipv4 address that will be running the backend server. This will be added to the files where the axios functions are running to send and retrieve data with the backend. The default port is 3000.
+2. You will have to use your localhost IPv4 address in order to connect with the backend server. The address should be added to the file called URL.ts that is located in the /frontend/constants/ directory. This is required for the frontend and backend to be able to communicate. The default port that is being used is 3000.
 
-```bash
-ipconfig
+   This is what the contents of the file looks like and the IP address should be added inside the quotation marks for example "192.168.1.2"
+
+```typescript
+const IP = ""; // <-- YOUR LOCAL HOST IP HERE
+export const URL = `http://${IP}:3000`;
 ```
 
 ## Start
@@ -32,3 +35,13 @@ node index.js
 ```
 
 These will start up both the app and the server. Once they are both running use the QR code displayed in the frontend terminal to connect with the expo app on your phone.
+
+## Login Data
+
+There is three different premade user accounts. All of this information is stored in the data.js file located in the backend directory. The login information for these accounts are below.
+
+| Username | Password  |
+| -------- | --------- |
+| user1    | password1 |
+| user2    | password2 |
+| user3    | password3 |
