@@ -19,27 +19,11 @@ export default function ViewBudget() {
   const { userID } = params;
   const [budgets, setBudgets] = useState<Budget[]>([]);
   const [loading, setLoading] = useState(true);
-  //let transactions: [] = [];
-  //const [transactions, setTransactions] = useState([]);
 
   useEffect(() => {
     fetchBudgets();
   }, []);
-
-  // let transactions = [];
-  // useEffect(() => {
-  //   // gets all transaction objects
-  //   axios
-  //     .post(`${URL}/user/transactions`, {
-  //       userID,
-  //     })
-  //     .then((res) => {
-  //       //onChangeTransactions(res.data);
-  //       transactions = res.data;
-  //       console.log(transactions);
-  //     });
-  // });
-
+  // requests all of the budgets that belong to the user
   const fetchBudgets = () => {
     axios
       .post(`${URL}/user/budgets`, { userID })
@@ -54,15 +38,13 @@ export default function ViewBudget() {
       });
   };
 
+  // generates the list items for all the budgets
   const renderItem = ({ item }: { item: Budget }) => (
     <View style={styles.transactionItem}>
       <Text style={styles.transactionText}>{`Name: ${item.budgetName}`}</Text>
       <Text
         style={styles.transactionText}
       >{`Total Amount: $${item.totalAmount}`}</Text>
-      {/* <Text
-        style={styles.transactionText}
-      >{`Description: ${item.description}`}</Text> */}
       <Text style={styles.transactionText}>{`Start Date: ${new Date(
         item.startDate
       ).toLocaleDateString()}`}</Text>
@@ -78,6 +60,7 @@ export default function ViewBudget() {
       {loading ? (
         <Text>Loading...</Text>
       ) : (
+        // List of all the budgets
         <FlatList
           data={budgets}
           keyExtractor={(item) => item.budgetID.toString()}
@@ -85,6 +68,7 @@ export default function ViewBudget() {
           style={styles.flatList}
         />
       )}
+      {/* Button to go back on the navigation stack */}
       <Pressable style={styles.button} onPress={() => router.back()}>
         <Text style={styles.buttonText}>Back</Text>
       </Pressable>

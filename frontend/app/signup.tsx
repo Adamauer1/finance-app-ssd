@@ -9,22 +9,19 @@ import {
   TextInput,
   View,
 } from "react-native";
-//import TextButton from "./TextButton.tsx";
 import { URL } from "@/constants/URL";
-//const URL = "192.168.1.28";
-export default function LogInScreen({}) {
-  //export default function GetStartedScreen({ navigation }) {
+export default function LogInScreen() {
   const [username, onChangeUsername] = useState("");
   const [password, onChangePassword] = useState("");
   const [cPassword, onChangeCPassword] = useState("");
   const [email, onChangeEmail] = useState("");
-  //   const [checkLogin, setCheckLogin] = useState(false);
-  //   const [loginResult, setLoginResult] = useState(false);
 
+  // sends the input data to the backend and saves a new user
   const onPressSignup = async () => {
-    const data = { username: username, password: password };
+    //const data = { username: username, password: password };
 
-    // perform checks if email is taken / password === cPassword
+    // perform checks if password === cPassword
+    // other checks should be implemented
     if (password == cPassword) {
       console.log("test");
       axios.post(`${URL}/signup`, {
@@ -32,23 +29,28 @@ export default function LogInScreen({}) {
         password,
         email,
       });
+      // navigate back to the index page
       router.replace({
         pathname: `/`,
       });
+    } else {
+      // display error messages
     }
   };
   return (
     <View style={styles.container}>
-      <Text style={styles.TEXT1}>USER SIGNUP </Text>
+      <Text style={styles.TEXT1}> USER SIGNUP </Text>
       <View style={styles.imageContainer}>
-        <Image source={require("@/images/Main.png")} style={styles.image} />
+        {/* <Image source={require("@/images/Main.png")} style={styles.image} /> */}
         <Text style={styles.text}>USERNAME</Text>
+        {/* Text Input to enter username */}
         <TextInput
           style={styles.input}
           value={username}
           onChangeText={onChangeUsername}
         />
         <Text style={styles.text}>PASSWORD</Text>
+        {/* Text Input to enter password */}
         <TextInput
           style={styles.input}
           value={password}
@@ -56,6 +58,7 @@ export default function LogInScreen({}) {
           secureTextEntry={true}
         />
         <Text style={styles.text}>CONFIRM PASSWORD</Text>
+        {/* Text Input to enter confirmation password */}
         <TextInput
           style={styles.input}
           value={cPassword}
@@ -63,11 +66,13 @@ export default function LogInScreen({}) {
           secureTextEntry={true}
         />
         <Text style={styles.text}>EMAIL</Text>
+        {/* Text Input to enter email */}
         <TextInput
           style={styles.input}
           value={email}
           onChangeText={onChangeEmail}
         />
+        {/* Button to signup */}
         <Pressable style={styles.button} onPress={onPressSignup}>
           <Text style={styles.buttonText}>SIGNUP</Text>
         </Pressable>

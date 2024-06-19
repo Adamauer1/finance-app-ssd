@@ -5,32 +5,18 @@ import { URL } from "@/constants/URL";
 import axios from "axios";
 
 export default function MainScreen() {
-  let userID = 1;
-  // let transactions: [] = [];
-  // const [transactions, setTransactions] = useState([]);
-
-  // useEffect(() => {
-  //   axios
-  //     .post(`${URL}/user/transactions`, {
-  //       userID,
-  //     })
-  //     .then((res) => {
-  //       //console.log(res.data);
-  //       //transactions = res.data;
-  //       setTransactions(res.data);
-  //     });
-  // }, []);
   return (
     <View style={styles.container}>
       <View style={styles.imageContainer}>
         <Image source={require("@/images/Main.png")} style={styles.image} />
       </View>
-
+      {/* Button to navigate to the signup page */}
       <Link href={"signup"} style={styles.button} asChild>
         <Pressable>
           <Text style={styles.buttonText}>SIGNUP</Text>
         </Pressable>
       </Link>
+      {/* Button to navigate to the login page */}
       <Link href={"login"} style={styles.button} asChild>
         <Pressable>
           <Text style={styles.buttonText}>LOG IN</Text>

@@ -1,60 +1,21 @@
 import axios from "axios";
 import { router, useLocalSearchParams } from "expo-router";
-//import * as React from "react";
 import { useEffect, useState } from "react";
 import { Image, Pressable, StyleSheet, Text, View } from "react-native";
 import { Link } from "expo-router";
 import { URL } from "@/constants/URL";
-//const URL = "192.168.6.109";
 
 export default function Budget({}) {
   const params = useLocalSearchParams();
   const { userID } = params;
-  // const [transactions, onChangeTransactions] = useState([]);
-  let budgets = [];
-  useEffect(() => {
-    // gets all transaction objects
-    axios
-      .post(`${URL}/user/budgets`, {
-        userID,
-      })
-      .then((res) => {
-        //onChangeTransactions(res.data);
-        budgets = res.data;
-        //console.log(budgets);
-      });
-  });
 
-  const onPressTransaction = async () => {
-    // send post to server with username and password
-    // check on server if valid
-    // return result by moving to next page or displaying error
-    //console.log(username);
-    const data = { username: userID };
-    axios
-      .post(`${URL}/login`, {
-        userID,
-      })
-      .then((res) => {
-        //console.log(res.data);
-        if (res.data.result) {
-          // navigate to next page
-          router.replace({
-            pathname: `/home/${res.data.userID}`,
-            //  params: { userID: res.data.userID },
-          });
-        } else {
-          // display error message
-        }
-      })
-      .catch((error) => {});
-  };
   return (
     <View style={styles.container}>
       <View style={styles.imageContainer}>
         <Image source={require("@/images/Main.png")} style={styles.image} />
       </View>
       <Text style={styles.TEXT1}>BUDGET</Text>
+      {/* Button to add a budget */}
       <Link
         href={{ pathname: "/home/AddBudget", params: { userID } }}
         style={styles.button}
@@ -64,7 +25,7 @@ export default function Budget({}) {
           <Text style={styles.buttonText}>ADD</Text>
         </Pressable>
       </Link>
-
+      {/* Button to view budgets */}
       <Link
         href={{ pathname: "/home/ViewBudget", params: { userID } }}
         style={styles.button}
@@ -74,12 +35,13 @@ export default function Budget({}) {
           <Text style={styles.buttonText}>VIEW</Text>
         </Pressable>
       </Link>
-
+      {/* Button not Implemented yet */}
       <Link href={"/home/Delete"} style={styles.button} asChild>
         <Pressable>
           <Text style={styles.buttonText}>DELETE</Text>
         </Pressable>
       </Link>
+      {/* Button not Implemented yet */}
       <Link href={"/home/Update"} style={styles.button} asChild>
         <Pressable>
           <Text style={styles.buttonText}>UPDATE</Text>

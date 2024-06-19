@@ -6,41 +6,14 @@ import { Image, Pressable, StyleSheet, Text, View } from "react-native";
 export default function AllScreens({}) {
   const params = useLocalSearchParams();
   const { userID } = params;
-  {
-    /*
-  const onPressLogin = async () => {
-    // send post to server with username and password
-    // check on server if valid
-    // return result by moving to next page or displaying error
-    //console.log(username);
-    const data = { username: userID };
-    axios
-      .post(`http://${URL}:3000/login`, {
-        userID,
-     
-      })
-      .then((res) => {
-        console.log(res.data);
-        if (res.data.result) {
-          // navigate to next page
-          router.replace({
-            pathname: `/home/${res.data.userID}`,
-            params: { userID: res.data.userID },
-          });
-          console.log("test");
-        } else {
-          // display error message
-        } 
-      })
-      .catch((error) => {});
-  };*/
-  }
+
   return (
     <View style={styles.container}>
       <View style={styles.imageContainer}>
         <Image source={require("@/images/Main.png")} style={styles.image} />
       </View>
       <Text style={styles.TEXT1}>HELLO - USER {userID}</Text>
+      {/* Navigation link to the transactions page */}
       <Link
         href={{ pathname: "home/Transaction", params: { userID } }}
         style={styles.button}
@@ -50,7 +23,7 @@ export default function AllScreens({}) {
           <Text style={styles.buttonText}>TRANSACTION</Text>
         </Pressable>
       </Link>
-
+      {/* Navigation link to the budgets page */}
       <Link
         href={{ pathname: "home/Budget", params: { userID } }}
         style={styles.button}
@@ -60,7 +33,8 @@ export default function AllScreens({}) {
           <Text style={styles.buttonText}>BUDGET</Text>
         </Pressable>
       </Link>
-
+      {/* Navigation link to the statitics page */}
+      {/* Page is not implemented yet */}
       <Link href={"/Statitics"} style={styles.button} asChild>
         <Pressable>
           <Text style={styles.buttonText}>STATISTICS</Text>

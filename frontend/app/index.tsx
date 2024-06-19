@@ -1,6 +1,5 @@
 import { View, Text, StyleSheet, Image, Pressable, Button } from "react-native";
 import { Link, useRouter } from "expo-router";
-import TextButton from "@/components/TextButton";
 
 export default function GetStartedScreen() {
   const router = useRouter();
@@ -9,19 +8,13 @@ export default function GetStartedScreen() {
       <Text style={styles.text}>FINANCIAL TRACKER APP</Text>
       <View style={styles.imageContainer}>
         <Image source={require("@/images/Main.png")} style={styles.image} />
+        {/* Button to navigate to the main screen */}
         <Link href={"/main"} style={styles.button} asChild>
           <Pressable>
             <Text style={styles.buttonText}>GET STARTED</Text>
           </Pressable>
         </Link>
       </View>
-      {/* <TextButton
-        onPress={
-          <Link href={}></Link>
-        }
-        buttonStyle={styles.button}
-        buttonText="GET STARTED"
-      /> */}
     </View>
   );
 }
@@ -82,9 +75,9 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: 40,
-    textAlign:'center',
+    textAlign: "center",
     fontWeight: "bold",
-    position : 'absolute',
+    position: "absolute",
     top: 100,
     color: "#999",
   },

@@ -17,27 +17,11 @@ export default function ViewTrans() {
   const { userID } = params;
   const [transactions, setTransactions] = useState<Transaction[]>([]);
   const [loading, setLoading] = useState(true);
-  //let transactions: [] = [];
-  //const [transactions, setTransactions] = useState([]);
 
   useEffect(() => {
     fetchTransactions();
   }, []);
-
-  // let transactions = [];
-  // useEffect(() => {
-  //   // gets all transaction objects
-  //   axios
-  //     .post(`${URL}/user/transactions`, {
-  //       userID,
-  //     })
-  //     .then((res) => {
-  //       //onChangeTransactions(res.data);
-  //       transactions = res.data;
-  //       console.log(transactions);
-  //     });
-  // });
-
+  // requests all of the transactions that belong to the user
   const fetchTransactions = () => {
     axios
       .post(`${URL}/user/transactions`, { userID })
@@ -52,6 +36,7 @@ export default function ViewTrans() {
       });
   };
 
+  // generates the list items for all the transactions
   const renderItem = ({ item }: { item: Transaction }) => (
     <View style={styles.transactionItem}>
       <Text style={styles.transactionText}>{`Title: ${item.title}`}</Text>
@@ -71,6 +56,7 @@ export default function ViewTrans() {
       {loading ? (
         <Text>Loading...</Text>
       ) : (
+        // List of all the transactions
         <FlatList
           data={transactions}
           keyExtractor={(item) => item.transactionID.toString()}
@@ -78,6 +64,7 @@ export default function ViewTrans() {
           style={styles.flatList}
         />
       )}
+      {/* Button to go back on the navigation stack */}
       <Pressable style={styles.button} onPress={() => router.back()}>
         <Text style={styles.buttonText}>Back</Text>
       </Pressable>

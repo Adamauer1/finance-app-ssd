@@ -8,14 +8,18 @@ const port = 3000;
 app.use(cors());
 app.use(bodyParser.json());
 
+// default route
 app.get("/", (req, res) => {
   //res.json(data);
 });
 
+// respones with the list of users
 app.get("/users", (req, res) => {
   res.json(data.users);
 });
 
+// check username and password with the user accounts saved
+// respones with the userID and a result of true if login is successful
 app.post("/login", (req, res) => {
   const { username, password } = req.body;
   // console.log(username);
@@ -30,9 +34,12 @@ app.post("/login", (req, res) => {
     }
   }
   //res.json({ userID: userID, result: authCheck });
+
+  // for testing the app auto login
   res.json({ userID: 1, result: true });
 });
 
+// adds a new user to the list of users based on the information from req.body
 app.post("/signup", (req, res) => {
   const { username, password, email } = req.body;
 
@@ -48,6 +55,8 @@ app.post("/signup", (req, res) => {
   data.users.push(newUser);
 });
 
+// respones with the information of the transaction based on transactionID
+// not implemented on the frontend
 app.post("/transaction", (req, res) => {
   const { transactionID } = req.body;
   console.log(transactionID);
@@ -59,6 +68,7 @@ app.post("/transaction", (req, res) => {
   }
 });
 
+// respones with the preperation data in order to add a transaction
 app.post("/user/addTransInfo", (req, res) => {
   const { userID } = req.body;
   let user;
@@ -87,6 +97,10 @@ app.post("/user/addTransInfo", (req, res) => {
   res.json(ret);
 });
 
+// builds the new transaction from the information provided then adds the transaction id to
+// the list of transactions in the user and budget datasets
+// Also performs the action of changing the total amount of the budget that the transcation
+// is applied to
 app.post("/addTransaction", (req, res) => {
   const { userID, budgetID, categoryID, title, description, amount, date } =
     req.body;
@@ -107,24 +121,7 @@ app.post("/addTransaction", (req, res) => {
       break;
     }
   }
-  // //view trans//////////////
-  // let transactions = {
-  //   title: title,
-  //   description: description,
-  //   amount: amount,
-  //   date: date,
-  // };
 
-  // // Endpoint to fetch transactions based on userID
-  // app.post("/getTransactions", (req, res) => {
-  //   const { userID } = req.body;
-  //   const userTransactions = transactions.filter(
-  //     (transaction) => transaction.userID === userID
-  //   );
-  //   console.log("test");
-  //   res.json({ transactions: userTransactions });
-  // });
-  ////////////
   for (let budget of data.budgets) {
     if (budget.budgetID == budgetID) {
       budget.transactionIDs.push(newTransaction.transactionID);
@@ -136,6 +133,7 @@ app.post("/addTransaction", (req, res) => {
   data.transactions.push(newTransaction);
 });
 
+// not implemented
 app.post("/editTransaction", (req, res) => {
   const {
     transactionID,
@@ -160,15 +158,19 @@ app.post("/editTransaction", (req, res) => {
   }
 });
 
+// not implemented
 app.post("/deleteTransaction", (req, res) => {
   const { transactionID, userID } = req.body;
   // remove transaction from data.transaction and data.userID
 });
 
+// not implemented
 app.post("/budget", (req, res) => {
   const { budgetID } = req.body;
 });
 
+// builds the new budget created by the user
+// then adds the budget to the list of budgets in the user dataset
 app.post("/addBudget", (req, res) => {
   const { userID, budgetName, totalAmount, startDate, endDate } = req.body;
 
@@ -194,14 +196,18 @@ app.post("/addBudget", (req, res) => {
   data.budgets.push(newBudget);
 });
 
+// not implemented
 app.post("/editBudget", (req, res) => {
   const { budgetID } = req.body;
 });
 
+// not implemented
 app.post("/deleteBudget", (req, res) => {
   const { budgetID } = req.body;
 });
 
+// response with the list of all transactions that have the userID that is
+// provided by req.body
 app.post("/user/transactions", (req, res) => {
   const { userID } = req.body;
   let transactions = [];
@@ -216,6 +222,8 @@ app.post("/user/transactions", (req, res) => {
   res.json(transactions);
 });
 
+// response with the list of all budgets that have the userID that is
+// provided by req.body
 app.post("/user/budgets", (req, res) => {
   const { userID } = req.body;
   let user;
@@ -238,6 +246,7 @@ app.post("/user/budgets", (req, res) => {
   res.json(budgets);
 });
 
+// starts the server
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
 });

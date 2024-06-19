@@ -10,10 +10,7 @@ import {
   View,
 } from "react-native";
 import { URL } from "@/constants/URL";
-// const URL = "192.168.6.109";
 export default function LogInScreen({}) {
-  //const params = useLocalSearchParams();
-  //const { transactions } = params;
   const [username, onChangeUsername] = useState("");
   const [password, onChangePassword] = useState("");
 
@@ -53,18 +50,21 @@ export default function LogInScreen({}) {
       </View>
 
       <Text style={styles.text}>USERNAME</Text>
+      {/* Text Input for username */}
       <TextInput
         style={styles.input}
         value={username}
         onChangeText={onChangeUsername}
       />
       <Text style={styles.text}>PASSWORD</Text>
+      {/* Text Input for password */}
       <TextInput
         style={styles.input}
         value={password}
         onChangeText={onChangePassword}
         secureTextEntry={true}
       />
+      {/* Button to login */}
       <Pressable style={styles.button} onPress={onPressLogin}>
         <Text style={styles.buttonText}>LOGIN</Text>
       </Pressable>

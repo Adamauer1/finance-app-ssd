@@ -17,44 +17,19 @@ import {
   SelectItem,
   Datepicker,
 } from "@ui-kitten/components";
-//const URL = ' 192.168.6.109'; // Your server IP
 
 export default function AddBudget() {
   const params = useLocalSearchParams();
   const { userID } = params;
   const [budgetName, setBudgetName] = useState("");
-  const [totalAmount, settotalAmount] = useState(0);
+  const [totalAmount, settotalAmount] = useState("");
   const [startDate, setstartDate] = useState(new Date());
   const [endDate, setendDate] = useState(new Date());
-  // useEffect(() => {
-  //   // gets all budget objects
-  //   axios
-  //     .post(`${URL}/user/addBudgetInfo`, {
-  //       userID,
-  //     })
-  //     .then((res) => {
-  //       setBudgetNames(res.data.budgets);
-  //       const budgetKeys: number[] = Object.keys(res.data.budgets).map((key) =>
-  //         parseInt(key)
-  //       );
-  //       //still works just a typescript type error
-  //       // @ts-ignore comment
-  //       setBudgetIDs(budgetKeys);
-  //       setBudgetID(budgetKeys[0]);
-  //     //  setCategoryNames(res.data.categorys);
-  //     //  const categoryKeys = Object.keys(res.data.categorys).map((key) =>
-  //    //     parseInt(key)
-  //    //   );
-  //       //still works just a typescript type error
-  //       // @ts-ignore comment
-  //     //  setCategoryIDs(categoryKeys);
-  //     //  setCategoryID(categoryKeys[0]);
-  //       //console.log(budgetIDs);
-  //     });
-  // }, []);
 
+  // sends the input data to the backend to be saved
   const onPressAddBudget = () => {
     //console.log(date);
+
     axios.post(`${URL}/addBudget`, {
       userID,
       budgetName,
@@ -63,6 +38,7 @@ export default function AddBudget() {
       endDate,
     });
 
+    // navigates back one page on the navigation stack
     router.back();
 
     // router.replace({
@@ -78,6 +54,7 @@ export default function AddBudget() {
       </View> */}
 
       <Text style={styles.TEXT1}>ADD BUDGET</Text>
+      {/* Text Input for the budgets name */}
       <Layout style={styles.inputRow}>
         <Text style={styles.text}>Budget Name:</Text>
         <TextInput
@@ -86,16 +63,18 @@ export default function AddBudget() {
           onChangeText={(text) => setBudgetName(text)}
         />
       </Layout>
+      {/* Text Input for the total amount */}
+      {/* Needs to be a positive or negative number -> 5 or -5 */}
       <Layout style={styles.inputRow}>
         <Text style={styles.text}>Total Amount:</Text>
         <TextInput
           style={styles.input}
           value={totalAmount.toString()}
-          onChangeText={(text) => settotalAmount(parseFloat(text))}
-          keyboardType="numeric"
+          onChangeText={(text) => settotalAmount(text)}
+          //keyboardType="numeric"
         />
       </Layout>
-
+      {/* Date selector for the start date */}
       <Layout style={styles.inputRow}>
         <Text style={styles.text}>Start Date</Text>
         {/* <TextInput style={styles.input} value={date} onChangeText={setDate} /> */}
@@ -104,7 +83,8 @@ export default function AddBudget() {
           onSelect={(nextDate) => setstartDate(nextDate)}
         />
       </Layout>
-
+      {/* Date selector for the end date */}
+      {/* No check yet to make sure the end date is after the start */}
       <Layout style={styles.inputRow}>
         <Text style={styles.text}>End Date</Text>
         <Datepicker
@@ -113,6 +93,8 @@ export default function AddBudget() {
         />
       </Layout>
 
+      {/* Button to add the budget */}
+      {/* No check yet to make sure only valid inputs get submitted */}
       <Pressable style={styles.button} onPress={onPressAddBudget}>
         <Text style={styles.buttonText}>Add Budget</Text>
       </Pressable>
