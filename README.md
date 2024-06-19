@@ -35,3 +35,13 @@ node index.js
 ```
 
 These will start up both the app and the server. Once they are both running use the QR code displayed in the frontend terminal to connect with the expo app on your phone.
+
+## Login Data
+
+There is three different premade user accounts. All of this information is stored in the data.js file located in the backend directory. The login information for these accounts are below.
+
+| Username | Password  |
+| -------- | --------- |
+| user1    | password1 |
+| user2    | password2 |
+| user3    | password3 |
