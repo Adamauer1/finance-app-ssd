@@ -36,17 +36,17 @@ export default function Budget({}) {
         </Pressable>
       </Link>
       {/* Button not Implemented yet */}
-      <Link href={"/home/Delete"} style={styles.button} asChild>
-        <Pressable>
-          <Text style={styles.buttonText}>DELETE</Text>
-        </Pressable>
-      </Link>
+      {/* <Link href={"/home/Delete"} style={styles.button} asChild> */}
+      <Pressable style={styles.buttonDisabled} disabled={true}>
+        <Text style={styles.buttonText}>DELETE</Text>
+      </Pressable>
+      {/* </Link> */}
       {/* Button not Implemented yet */}
-      <Link href={"/home/Update"} style={styles.button} asChild>
-        <Pressable>
-          <Text style={styles.buttonText}>UPDATE</Text>
-        </Pressable>
-      </Link>
+      {/* <Link href={"/home/Update"} style={styles.button} asChild> */}
+      <Pressable style={styles.buttonDisabled} disabled={true}>
+        <Text style={styles.buttonText}>UPDATE</Text>
+      </Pressable>
+      {/* </Link> */}
     </View>
   );
 }
@@ -68,6 +68,26 @@ const styles = StyleSheet.create({
     height: 50,
     padding: 10,
     backgroundColor: "#afee",
+    marginTop: 55,
+    marginBottom: 20,
+    borderRadius: 25,
+    justifyContent: "center",
+    alignItems: "center",
+    shadowColor: "#000",
+
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
+  },
+  buttonDisabled: {
+    width: 300,
+    height: 50,
+    padding: 10,
+    backgroundColor: "grey",
     marginTop: 55,
     marginBottom: 20,
     borderRadius: 25,
