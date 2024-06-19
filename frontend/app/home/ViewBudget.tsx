@@ -60,10 +60,7 @@ export default function ViewBudget() {
       <Text
         style={styles.transactionText}
       >{`Total Amount: $${item.totalAmount}`}</Text>
-      {/* <Text
-        style={styles.transactionText}
-      >{`Description: ${item.description}`}</Text> */}
-      <Text style={styles.transactionText}>{`Start Date: ${new Date(
+        <Text style={styles.transactionText}>{`Start Date: ${new Date(
         item.startDate
       ).toLocaleDateString()}`}</Text>
       <Text style={styles.transactionText}>{`End Date: ${new Date(
@@ -74,7 +71,7 @@ export default function ViewBudget() {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.header}>Budgets</Text>
+      <Text style={styles.header}>SHOW BUDGETS</Text>
       {loading ? (
         <Text>Loading...</Text>
       ) : (

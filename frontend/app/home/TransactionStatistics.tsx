@@ -1,9 +1,10 @@
 import { URL } from "@/constants/URL";
 import axios from "axios";
-import { useLocalSearchParams , router} from "expo-router";
+import { useLocalSearchParams } from "expo-router";
 import React, { useEffect, useState } from "react";
-import { Dimensions, FlatList, StyleSheet, Text, View , Pressable} from "react-native";
+import { Dimensions, FlatList, StyleSheet, Text, View } from "react-native";
 import { BarChart } from 'react-native-chart-kit';
+import Transaction from "./Transaction";
 
 interface Transaction {
   categoryID : number,
@@ -14,7 +15,7 @@ interface Transaction {
   date: string;
 }
 
-export default function ViewTrans() {
+export default function TransactionStatistics() {
   const params = useLocalSearchParams();
   const { userID } = params;
   const [transactions, setTransactions] = useState<Transaction[]>([]);
@@ -22,28 +23,11 @@ export default function ViewTrans() {
   //chart
   const [chartData, setChartData] = useState<{ labels: string[]; datasets: { data: number[] }[] }>({ labels: [], datasets: [{ data: [] }] });
   
-  //let transactions: [] = [];
-  //const [transactions, setTransactions] = useState([]);
-
   useEffect(() => {
     fetchTransactions();
   }, []);
 
-  // let transactions = [];
-  // useEffect(() => {
-  //   // gets all transaction objects
-  //   axios
-  //     .post(`${URL}/user/transactions`, {
-  //       userID,
-  //     })
-  //     .then((res) => {
-  //       //onChangeTransactions(res.data);
-  //       transactions = res.data;
-  //       console.log(transactions);
-  //     });
-  // });
-
-  const fetchTransactions = () => {
+   const fetchTransactions = () => {
     axios
       .post(`${URL}/user/transactions`, { userID })
       .then((res) => {
@@ -56,42 +40,55 @@ export default function ViewTrans() {
         setLoading(false);
       });
   };
-//display all transaction
-  const renderItem = ({ item }: { item: Transaction }) => (
-    <View style={styles.transactionItem}>
-      <Text style={styles.transactionText}>{`Title: ${item.title}`}</Text>
-      <Text style={styles.transactionText}>{`Amount: $${item.amount}`}</Text>
-      <Text
-        style={styles.transactionText}
-      >{`Description: ${item.description}`}</Text>
-      <Text style={styles.transactionText}>{`Date: ${new Date(
-        item.date
-      ).toLocaleDateString()}`}</Text>
-    </View>
-  );
+  // bar chart
+  const prepareChartData = () => {
+  const labels: string[] = [];
+  const data: number[] = [];
 
+  transactions.forEach(transaction => {
+    labels.push(transaction.title);
+    data.push(transaction.amount);
+    console.log ('title:', transaction.title);
 
+  });
+ 
+      return ({ labels, datasets: [{ data }] });
+      
+  };
+///////
 
   return (
     <View style={styles.container}>
-
-     <Text style={styles.header}>SHOW TRANSACTIONS</Text>
-      {loading ? (
-        <Text>Loading...</Text>
-      ) : (
-        <FlatList
-          data={transactions}
-          keyExtractor={(item) => item.transactionID.toString()}
-          renderItem={renderItem}
-          style={styles.flatList}
-        />
-      )}
-   
-    <Pressable style={styles.button} onPress={() => router.back()}>
-   <Text style={styles.buttonText}>Back</Text>
- </Pressable>
+    <Text style={styles.header}>TRANSACTION STATISTICS</Text>
+    {loading ? (
+      <Text>Loading...</Text>
+    ) : (
+      <BarChart
+        data={prepareChartData()}
+        width={Dimensions.get('window').width - 20}
+        height={220}
+        yAxisLabel="$"
+        yAxisSuffix="" // Add this line to fix the error
+        chartConfig={{
+          backgroundColor: '#1cc910',
+          backgroundGradientFrom: '#eff3ff',
+          backgroundGradientTo: '#efefef',
+          decimalPlaces: 2,
+            color: (opacity = 100) => `rgba(10, 179, 13, ${opacity})`,
+          style: {
+            borderRadius: 16
+          }
+        }}
+        style={{
+          marginVertical: 8,
+          borderRadius: 16
+        }}
+      />
  
- </View>
+   // </View>
+   )}
+     
+  </View>
 );
 }
 
