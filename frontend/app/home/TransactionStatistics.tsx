@@ -82,7 +82,6 @@ export default function TransactionStatistics() {
     {loading ? (
       <Text>Loading...</Text>
     ) : (
-      
       <BarChart
         data={prepareChartData()}
         width={Dimensions.get('window').width - 20}
@@ -110,49 +109,16 @@ export default function TransactionStatistics() {
             borderRadius: 16,
             marginVertical : 8,
           }}
-    />
-    // </View>
-   )}
-     
-  </View>
-);
-      <Text style={styles.header}>TRANSACTION STATISTICS</Text>
-      {loading ? (
-        <Text>Loading...</Text>
-      ) : (
-        <BarChart
-          data={prepareChartData()}
-          width={Dimensions.get("window").width - 20}
-          height={220}
-          yAxisLabel="$"
-          yAxisSuffix="" // Add this line to fix the error
-          chartConfig={{
-            backgroundColor: "#1cc910",
-            backgroundGradientFrom: "#eff3ff",
-            backgroundGradientTo: "#efefef",
-            decimalPlaces: 2,
-            //color: (opacity = 100) => `rgba(10, 179, 13, ${opacity})`,
-            color: (opacity = 100) => `rgba(0, 0, 0, ${opacity})`,
-            style: {
-              borderRadius: 16,
-            },
-          }}
           withCustomBarColorFromData={true}
           flatColor={true}
-          fromZero={true}
-          showBarTops={true}
-          style={{
-            marginVertical: 8,
-            borderRadius: 16,
-          }}
-        />
+          showBarTops
+          fromZero
 
-        // </View>
-      )}
-    </View>
-  );
-}
-
+    />
+  )}
+  </View>
+  );   
+      }
 const styles = StyleSheet.create({
   container: {
     flex: 1,

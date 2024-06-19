@@ -1,3 +1,2 @@
-const IP = "172.20.10.3";
-const IP = ""; // <-- YOUR LOCAL HOST IP HERE
+const IP = "192.168.1.28";
 export const URL = `http://${IP}:3000`;

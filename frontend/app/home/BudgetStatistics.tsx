@@ -100,49 +100,15 @@ export default function BudgetStatistics() {
           borderRadius: 16,
           marginVertical : 8,
         }}
-  />
- 
-   // </View>
-   )}
-     
-  </View>
-);
-      <Text style={styles.header}>BUDGET STATISTICS</Text>
-      {loading ? (
-        <Text>Loading...</Text>
-      ) : (
-        <BarChart
-          data={prepareChartData()}
-          width={Dimensions.get("window").width - 20}
-          height={220}
-          yAxisLabel="$"
-          yAxisSuffix="" // Add this line to fix the error
-          chartConfig={{
-            backgroundColor: "#1cc910",
-            backgroundGradientFrom: "#eff3ff",
-            backgroundGradientTo: "#efefef",
-            decimalPlaces: 2,
-            //color: (opacity = 100) => `rgba(200, 30, 290, ${opacity})`,
-            color: (opacity = 100) => `rgba(0, 0, 0, ${opacity})`,
-            style: {
-              borderRadius: 16,
-            },
-          }}
-          style={{
-            marginVertical: 8,
-            borderRadius: 16,
-          }}
-          withCustomBarColorFromData={true}
-          flatColor={true}
-          showBarTops
-          fromZero
-        />
-
-        // </View>
+        withCustomBarColorFromData={true}
+        flatColor={true}
+        showBarTops
+        fromZero
+   />
       )}
-    </View>
-  );
-}
+   </View>
+);
+} 
 
 const styles = StyleSheet.create({
   container: {
