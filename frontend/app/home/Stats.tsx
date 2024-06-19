@@ -3,19 +3,20 @@ import * as React from "react";
 import { Image, Pressable, StyleSheet, Text, View } from "react-native";
 //const URL = "192.168.6.109";
 
-export default function AllScreens({}) {
+export default function Stats({}) {
   const params = useLocalSearchParams();
   const { userID } = params;
-
+  
   return (
     <View style={styles.container}>
       <View style={styles.imageContainer}>
         <Image source={require("@/images/Main.png")} style={styles.image} />
       </View>
       <Text style={styles.TEXT1}>HELLO - USER {userID}</Text>
-      {/* Navigation link to the transactions page */}
+      
+      <Text style={styles.TEXT2}>STATISTICS</Text>
       <Link
-        href={{ pathname: "home/Transaction", params: { userID } }}
+        href={{ pathname: "home/TransactionStatistics", params: { userID } }}
         style={styles.button}
         asChild
       >
@@ -23,9 +24,9 @@ export default function AllScreens({}) {
           <Text style={styles.buttonText}>TRANSACTION</Text>
         </Pressable>
       </Link>
-      {/* Navigation link to the budgets page */}
+
       <Link
-        href={{ pathname: "home/Budget", params: { userID } }}
+        href={{ pathname: "home/BudgetStatistics", params: { userID } }}
         style={styles.button}
         asChild
       >
@@ -33,15 +34,7 @@ export default function AllScreens({}) {
           <Text style={styles.buttonText}>BUDGET</Text>
         </Pressable>
       </Link>
-      <Link
-        href={{ pathname: "home/Stats", params: { userID } }}
-        style={styles.button}
-        asChild
-      >
-        <Pressable>
-          <Text style={styles.buttonText}>STATISTICS</Text>
-        </Pressable>
-      </Link>
+      
     </View>
   );
 }
@@ -100,11 +93,19 @@ const styles = StyleSheet.create({
     top: 100,
   },
   TEXT1: {
-    fontSize: 35,
+    fontSize: 25,
     textAlign: "center",
     fontWeight: "bold",
     position: "absolute",
     top: 75,
+    color: "#afee",
+  },
+  TEXT2: {
+    fontSize: 30,
+    textAlign: "center",
+    fontWeight: "bold",
+    position: "absolute",
+    top: 400,
     color: "#afee",
   },
 
@@ -114,7 +115,7 @@ const styles = StyleSheet.create({
   },
   image: {
     width: 250,
-    height: 250,
+    height: 200,
     // marginRight: 10,
     resizeMode: "contain",
   },
@@ -122,6 +123,6 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    marginTop: 100,
+    marginTop: 10,
   },
 });

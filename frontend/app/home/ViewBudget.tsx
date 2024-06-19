@@ -56,7 +56,7 @@ export default function ViewBudget() {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.header}>Budgets</Text>
+      <Text style={styles.header}>SHOW BUDGETS</Text>
       {loading ? (
         <Text>Loading...</Text>
       ) : (
