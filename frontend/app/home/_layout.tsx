@@ -11,6 +11,12 @@ export default function HomeLayout() {
       <Stack.Screen name="Transaction" options={{ headerShown: false }} />
       <Stack.Screen name="ViewTrans" options={{ headerShown: false }} />
       <Stack.Screen name="ViewBudget" options={{ headerShown: false }} />
+      <Stack.Screen name="BudgetStatistics" options={{ headerShown: false }} />
+      <Stack.Screen
+        name="TransactionStatistics"
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen name="Stats" options={{ headerShown: false }} />
     </Stack>
   );
 }
