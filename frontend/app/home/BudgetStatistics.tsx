@@ -68,26 +68,33 @@ interface Budget {
       <Text>Loading...</Text>
     ) : (
       <BarChart
-        data={prepareChartData()}
-        width={Dimensions.get('window').width - 20}
-        height={220}
-        yAxisLabel="$"
-        yAxisSuffix="" // Add this line to fix the error
-        chartConfig={{
-          backgroundColor: '#1cc910',
-          backgroundGradientFrom: '#eff3ff',
-          backgroundGradientTo: '#efefef',
-          decimalPlaces: 2,
-            color: (opacity = 100) => `rgba(200, 30, 290, ${opacity})`,
-          style: {
-            borderRadius: 16
-          }
+      data={prepareChartData()}
+      width={Dimensions.get('window').width - 20}
+      height={450}
+      yAxisLabel="$"
+      yAxisSuffix="" // Add this line to fix the error
+      fromZero={true}
+      chartConfig={{
+        backgroundColor: '#1cc910',
+        backgroundGradientFrom: '#ffe5e5',
+        backgroundGradientTo: '#f77f00',
+        decimalPlaces: 2,
+          color: (opacity = 1) => `rgba(0, 0, 255, ${opacity})`,
+          labelColor: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
+       
+          propsForBackgroundLines: {
+            strokeWidth: 1,
+            stroke: '#e3e3e3',
+            strokeDasharray: "5, 5", // dashed lines for the background grid
+          },
+          barPercentage: 0.7,
+          useShadowColorFromDataset: false,
         }}
-        style={{
-          marginVertical: 8,
-          borderRadius: 16
+          style = {{
+          borderRadius: 16,
+          marginVertical : 8,
         }}
-      />
+  />
  
    // </View>
    )}
