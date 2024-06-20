@@ -7,6 +7,7 @@ import {
   Text,
   TextInput,
   View,
+  ScrollView,
 } from "react-native";
 import { router, useLocalSearchParams } from "expo-router";
 import { URL } from "@/constants/URL";
@@ -16,12 +17,14 @@ import {
   Select,
   SelectItem,
   Datepicker,
+  RadioGroup,
+  Radio,
 } from "@ui-kitten/components";
 
 export default function AddTrans() {
   const params = useLocalSearchParams();
   const { userID } = params;
-  //const [isLoading, setIsLoading] = useState(true);
+  const [isComplete, setIsComplete] = useState(true);
   const [budgetID, setBudgetID] = useState(0);
   const [categoryID, setCategoryID] = useState(0);
   const [title, setTitle] = useState("");
@@ -32,6 +35,7 @@ export default function AddTrans() {
   const [budgetIDs, setBudgetIDs] = useState<[]>([]);
   const [categoryIDs, setCategoryIDs] = useState<[]>([]);
   const [categoryNames, setCategoryNames] = useState([]);
+  const [selectedRadioIndex, setSelectedRadioIndex] = useState<number>(-1);
   const [selectedBudgetIndex, setSelectedBudgetIndex] = useState<
     IndexPath | IndexPath[]
   >(new IndexPath(0));
@@ -99,94 +103,139 @@ export default function AddTrans() {
   };
 
   return (
-    <View style={styles.container}>
-      {/* <View style={styles.imageContainer}>
+    <ScrollView
+      contentContainerStyle={styles.scrollView}
+      alwaysBounceVertical={false}
+      automaticallyAdjustKeyboardInsets={true}
+      bounces={false}
+    >
+      <Layout style={styles.container}>
+        {/* <View style={styles.imageContainer}>
         <Image source={require("@/images/Main.png")} style={styles.image} />
       </View> */}
+        <Layout>
+          <Text style={styles.TEXT1}>ADD TRANSACTION</Text>
+        </Layout>
+        {/* Select input that allows for the selection of the budget that the transaction will be added too */}
+        <Layout>
+          <Layout style={styles.inputRow}>
+            <Text style={styles.text}>Budget:</Text>
+            <Select
+              style={styles.select}
+              selectedIndex={selectedBudgetIndex}
+              onSelect={(index) => {
+                console.log(budgetIDs[(index as IndexPath).row]);
+                setSelectedBudgetIndex(index);
+                setBudgetID(budgetIDs[(index as IndexPath).row]);
+              }}
+              value={
+                selectedBudgetIndex
+                  ? budgetNames[
+                      budgetIDs[(selectedBudgetIndex as IndexPath).row]
+                    ]
+                  : "Select an option"
+              }
+            >
+              {buildNameList(budgetNames, budgetIDs)}
+            </Select>
+          </Layout>
+          {/* Text Input for the transaction title */}
+          <Layout style={styles.inputRow}>
+            <Text style={styles.text}>Title:</Text>
+            <TextInput
+              style={styles.input}
+              value={title}
+              onChangeText={setTitle}
+            />
+          </Layout>
 
-      <Text style={styles.TEXT1}>ADD TRANSACTION</Text>
-      {/* Select input that allows for the selection of the budget that the transaction will be added too */}
-      <Layout style={styles.inputRow}>
-        <Text style={styles.text}>Budget:</Text>
-        <Select
-          style={styles.select}
-          selectedIndex={selectedBudgetIndex}
-          onSelect={(index) => {
-            console.log(budgetIDs[(index as IndexPath).row]);
-            setSelectedBudgetIndex(index);
-            setBudgetID(budgetIDs[(index as IndexPath).row]);
-          }}
-          value={
-            selectedBudgetIndex
-              ? budgetNames[budgetIDs[(selectedBudgetIndex as IndexPath).row]]
-              : "Select an option"
-          }
-        >
-          {buildNameList(budgetNames, budgetIDs)}
-        </Select>
+          <Layout style={styles.inputRow}>
+            <Text style={styles.text}>Type:</Text>
+            <RadioGroup
+              style={styles.radioGroup}
+              selectedIndex={selectedRadioIndex}
+              onChange={(index) => setSelectedRadioIndex(index)}
+            >
+              <Radio>Income</Radio>
+              <Radio>Expense</Radio>
+            </RadioGroup>
+          </Layout>
+
+          {/* Text Input for the amount */}
+          {/* Needs to be a positive or negative number -> 5 or -5 */}
+          <Layout style={styles.inputRow}>
+            <Text style={styles.text}>Amount:</Text>
+            <TextInput
+              style={styles.input}
+              value={amount.toString()}
+              onChangeText={(text) => {
+                // setCheckAmount(!isNaN(parseFloat(text)))
+                // two ways to doing it add a new selection or radio button to select adding or subtracting
+                // or use the numeric & punk keyboard and check with isNaN()
+                //console.log(!isNaN(text) && text != "");
+                setAmount(text);
+              }}
+              keyboardType="numeric"
+            />
+          </Layout>
+          {/* Select input that allows for the selection of the category */}
+          <Layout style={styles.inputRow}>
+            <Text style={styles.text}>Category:</Text>
+            <Select
+              style={styles.select}
+              selectedIndex={selectedCategoryIndex}
+              onSelect={(index) => {
+                console.log(categoryIDs[(index as IndexPath).row]);
+                setCategoryID(categoryIDs[(index as IndexPath).row]);
+                setSelectedCategoryIndex(index);
+              }}
+              value={
+                selectedCategoryIndex
+                  ? categoryNames[
+                      categoryIDs[(selectedCategoryIndex as IndexPath).row]
+                    ]
+                  : "Select an option"
+              }
+            >
+              {buildNameList(categoryNames, categoryIDs)}
+            </Select>
+          </Layout>
+          <Layout style={styles.inputRow}>
+            <Text style={styles.text}>Date</Text>
+            {/* <TextInput style={styles.input} value={date} onChangeText={setDate} /> */}
+            <Datepicker
+              date={date}
+              onSelect={(nextDate) => setDate(nextDate)}
+            />
+          </Layout>
+          {/* Date selector for the date */}
+          {/* No check yet to make sure the date is between the start and end date of the budget being selected */}
+          <Layout style={styles.inputRow}>
+            <Text style={styles.text}>Description</Text>
+            <TextInput
+              style={styles.input}
+              value={description}
+              onChangeText={setDescription}
+            />
+            {/* Button to add the transaction */}
+            {/* No check yet to make sure only valid inputs get submitted */}
+          </Layout>
+        </Layout>
+        <Layout>
+          <Pressable style={styles.button} onPress={onPressAddTransaction}>
+            <Text style={styles.buttonText}>Add Transaction</Text>
+          </Pressable>
+        </Layout>
       </Layout>
-      {/* Text Input for the transaction title */}
-      <Layout style={styles.inputRow}>
-        <Text style={styles.text}>Title:</Text>
-        <TextInput style={styles.input} value={title} onChangeText={setTitle} />
-      </Layout>
-      {/* Text Input for the amount */}
-      {/* Needs to be a positive or negative number -> 5 or -5 */}
-      <Layout style={styles.inputRow}>
-        <Text style={styles.text}>Amount:</Text>
-        <TextInput
-          style={styles.input}
-          value={amount.toString()}
-          onChangeText={(text) => setAmount(text)}
-          //keyboardType="numbers-and-punctuation"
-        />
-      </Layout>
-      {/* Select input that allows for the selection of the category */}
-      <Layout style={styles.inputRow}>
-        <Text style={styles.text}>Category:</Text>
-        <Select
-          style={styles.select}
-          selectedIndex={selectedCategoryIndex}
-          onSelect={(index) => {
-            console.log(categoryIDs[(index as IndexPath).row]);
-            setCategoryID(categoryIDs[(index as IndexPath).row]);
-            setSelectedCategoryIndex(index);
-          }}
-          value={
-            selectedCategoryIndex
-              ? categoryNames[
-                  categoryIDs[(selectedCategoryIndex as IndexPath).row]
-                ]
-              : "Select an option"
-          }
-        >
-          {buildNameList(categoryNames, categoryIDs)}
-        </Select>
-      </Layout>
-      <Layout style={styles.inputRow}>
-        <Text style={styles.text}>Date</Text>
-        {/* <TextInput style={styles.input} value={date} onChangeText={setDate} /> */}
-        <Datepicker date={date} onSelect={(nextDate) => setDate(nextDate)} />
-      </Layout>
-      {/* Date selector for the date */}
-      {/* No check yet to make sure the date is between the start and end date of the budget being selected */}
-      <Layout style={styles.inputRow}>
-        <Text style={styles.text}>Description</Text>
-        <TextInput
-          style={styles.input}
-          value={description}
-          onChangeText={setDescription}
-        />
-        {/* Button to add the transaction */}
-        {/* No check yet to make sure only valid inputs get submitted */}
-      </Layout>
-      <Pressable style={styles.button} onPress={onPressAddTransaction}>
-        <Text style={styles.buttonText}>Add Transaction</Text>
-      </Pressable>
-    </View>
+    </ScrollView>
   );
 }
 const styles = StyleSheet.create({
+  scrollView: {
+    width: "100%",
+    height: "100%",
+    flex: 1,
+  },
   container: {
     fontSize: 80,
     width: "100%",
@@ -198,9 +247,14 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     borderColor: "#ccc",
-    alignContent: "center",
-    padding: 7,
+    //alignContent: "center",
+    //padding: 7,
+    borderWidth: 4,
     borderRadius: 5,
+  },
+  radioGroup: {
+    display: "flex",
+    flexDirection: "row",
   },
   button: {
     width: 300,
@@ -267,8 +321,8 @@ const styles = StyleSheet.create({
     fontSize: 35,
     textAlign: "center",
     fontWeight: "bold",
-    position: "absolute",
-    top: 120,
+    //position: "absolute",
+    //top: 120,
     color: "#afee",
   },
 

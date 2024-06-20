@@ -249,4 +249,6 @@ app.post("/user/budgets", (req, res) => {
 // starts the server
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
+  // console.log(parseFloat("40fe"));
+  console.log(isNaN("403"));
 });
