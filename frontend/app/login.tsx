@@ -13,12 +13,21 @@ import {
 import { URL } from "@/constants/URL";
 export default function LogInScreen({}) {
   const [username, onChangeUsername] = useState("");
+  const [firstUsername, setFirstUsername] = useState(false);
   const [password, onChangePassword] = useState("");
+  const [firstPassword, setFirstPassword] = useState(false);
 
-  axios.get(`${URL}/users`).then((res) => {
-    //console.log(res.data);
-  });
+  // axios.get(`${URL}/users`).then((res) => {
+  //   //console.log(res.data);
+  // });
   const onPressLogin = async () => {
+    if (username == "" || password == "") {
+      setFirstUsername(true);
+      setFirstPassword(true);
+      return;
+    }
+
+    // very simple login for demo only
     // send post to server with username and password
     // check on server if valid
     // return result by moving to next page or displaying error
@@ -39,6 +48,7 @@ export default function LogInScreen({}) {
           });
         } else {
           // display error message
+          onChangePassword("");
         }
       })
       .catch((error) => {});
@@ -59,17 +69,23 @@ export default function LogInScreen({}) {
       <Text style={styles.text}>USERNAME</Text>
       {/* Text Input for username */}
       <TextInput
-        style={styles.input}
+        style={
+          username == "" && firstUsername ? styles.inputError : styles.input
+        }
         value={username}
         onChangeText={onChangeUsername}
+        onPress={() => setFirstUsername(true)}
       />
       <Text style={styles.text}>PASSWORD</Text>
       {/* Text Input for password */}
       <TextInput
-        style={styles.input}
+        style={
+          password == "" && firstPassword ? styles.inputError : styles.input
+        }
         value={password}
         onChangeText={onChangePassword}
         secureTextEntry={true}
+        onPress={() => setFirstPassword(true)}
       />
       {/* Button to login */}
       <Pressable style={styles.button} onPress={onPressLogin}>
@@ -122,6 +138,17 @@ const styles = StyleSheet.create({
     width: 250,
     margin: 12,
     borderWidth: 1,
+    padding: 10,
+    backgroundColor: "#afee",
+    textAlign: "center",
+  },
+  inputError: {
+    //flex: 0.1,
+    height: 60,
+    width: 250,
+    margin: 12,
+    borderWidth: 3,
+    borderColor: "red",
     padding: 10,
     backgroundColor: "#afee",
     textAlign: "center",

@@ -13,18 +13,28 @@ import {
 import { URL } from "@/constants/URL";
 export default function LogInScreen() {
   const [username, onChangeUsername] = useState("");
+  const [firstUsername, setFirstUsername] = useState(false);
   const [password, onChangePassword] = useState("");
+  const [firstPassword, setFirstPassword] = useState(false);
   const [cPassword, onChangeCPassword] = useState("");
+  const [firstCPassword, setFirstCPassword] = useState(false);
   const [email, onChangeEmail] = useState("");
+  const [firstEmail, setFirstEmail] = useState(false);
 
   // sends the input data to the backend and saves a new user
   const onPressSignup = async () => {
-    //const data = { username: username, password: password };
+    if (username == "" || password == "" || cPassword == "" || email == "") {
+      setFirstUsername(true);
+      setFirstPassword(true);
+      setFirstCPassword(true);
+      setFirstEmail(true);
+      return;
+    }
 
+    // very simple signup
     // perform checks if password === cPassword
     // other checks should be implemented
     if (password == cPassword) {
-      console.log("test");
       axios.post(`${URL}/signup`, {
         username,
         password,
@@ -52,32 +62,42 @@ export default function LogInScreen() {
         <Text style={styles.text}>USERNAME</Text>
         {/* Text Input to enter username */}
         <TextInput
-          style={styles.input}
+          style={
+            username == "" && firstUsername ? styles.inputError : styles.input
+          }
           value={username}
           onChangeText={onChangeUsername}
+          onPress={() => setFirstUsername(true)}
         />
         <Text style={styles.text}>PASSWORD</Text>
         {/* Text Input to enter password */}
         <TextInput
-          style={styles.input}
+          style={
+            password == "" && firstPassword ? styles.inputError : styles.input
+          }
           value={password}
           onChangeText={onChangePassword}
           secureTextEntry={true}
+          onPress={() => setFirstPassword(true)}
         />
         <Text style={styles.text}>CONFIRM PASSWORD</Text>
         {/* Text Input to enter confirmation password */}
         <TextInput
-          style={styles.input}
+          style={
+            cPassword == "" && firstCPassword ? styles.inputError : styles.input
+          }
           value={cPassword}
           onChangeText={onChangeCPassword}
           secureTextEntry={true}
+          onPress={() => setFirstCPassword(true)}
         />
         <Text style={styles.text}>EMAIL</Text>
         {/* Text Input to enter email */}
         <TextInput
-          style={styles.input}
+          style={email == "" && firstEmail ? styles.inputError : styles.input}
           value={email}
           onChangeText={onChangeEmail}
+          onPress={() => setFirstEmail(true)}
         />
         {/* Button to signup */}
         <Pressable style={styles.button} onPress={onPressSignup}>
@@ -131,6 +151,18 @@ const styles = StyleSheet.create({
     width: 250,
     margin: 12,
     borderWidth: 1,
+    padding: 10,
+    backgroundColor: "#afee",
+    textAlign: "center",
+  },
+
+  inputError: {
+    //flex: 0.1,
+    height: 60,
+    width: 250,
+    margin: 12,
+    borderWidth: 3,
+    borderColor: "red",
     padding: 10,
     backgroundColor: "#afee",
     textAlign: "center",

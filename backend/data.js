@@ -83,7 +83,7 @@ module.exports = {
       title: "Rent",
       description: "",
       amount: -120.52,
-      date: "",
+      date: "2024-06-04T22:42:17.182Z",
     },
     {
       transactionID: 3,
@@ -93,7 +93,7 @@ module.exports = {
       title: "Friend",
       description: "",
       amount: 20.82,
-      date: "",
+      date: "2024-06-04T22:42:17.182Z",
     },
     {
       transactionID: 4,
@@ -103,7 +103,7 @@ module.exports = {
       title: "Food",
       description: "",
       amount: -30.99,
-      date: "",
+      date: "2024-06-04T22:42:17.182Z",
     },
     {
       transactionID: 5,
@@ -113,7 +113,7 @@ module.exports = {
       title: "Friend",
       description: "",
       amount: 15.18,
-      date: "",
+      date: "2024-06-04T22:42:17.182Z",
     },
     {
       transactionID: 6,
@@ -123,7 +123,7 @@ module.exports = {
       title: "Birthday",
       description: "",
       amount: 62.62,
-      date: "",
+      date: "2024-06-04T22:42:17.182Z",
     },
     {
       transactionID: 7,
@@ -133,7 +133,7 @@ module.exports = {
       title: "Food",
       description: "",
       amount: -32.17,
-      date: "",
+      date: "2024-06-04T22:42:17.182Z",
     },
     {
       transactionID: 8,
@@ -143,7 +143,7 @@ module.exports = {
       title: "Deposit",
       description: "",
       amount: 70.2,
-      date: "",
+      date: "2024-06-04T22:42:17.182Z",
     },
     {
       transactionID: 9,
@@ -153,7 +153,7 @@ module.exports = {
       title: "Rent",
       description: "",
       amount: -90.82,
-      date: "",
+      date: "2024-06-04T22:42:17.182Z",
     },
     {
       transactionID: 10,
@@ -163,7 +163,7 @@ module.exports = {
       title: "Repair",
       description: "",
       amount: -24.3,
-      date: "",
+      date: "2024-06-04T22:42:17.182Z",
     },
   ],
 };
