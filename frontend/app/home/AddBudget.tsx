@@ -23,7 +23,7 @@ export default function AddBudget() {
   const params = useLocalSearchParams();
   const { userID } = params;
   const [budgetName, setBudgetName] = useState("");
-  const [totalAmount, settotalAmount] = useState("");
+  const [totalAmount, setTotalAmount] = useState("");
   const [startDate, setstartDate] = useState(new Date());
   const [endDate, setendDate] = useState(new Date());
 
@@ -71,14 +71,16 @@ export default function AddBudget() {
         />
       </Layout>
       {/* Text Input for the total amount */}
-      {/* Needs to be a positive or negative number -> 5 or -5 */}
       <Layout style={styles.inputRow}>
         <Text style={styles.text}>Total Amount:</Text>
         <TextInput
           style={styles.input}
-          value={totalAmount.toString()}
-          onChangeText={(text) => settotalAmount(text)}
-          //keyboardType="numeric"
+          value={totalAmount}
+          onChangeText={(text) => {
+            text = text.replace(",", ".");
+            setTotalAmount(text);
+          }}
+          keyboardType="numeric"
         />
       </Layout>
       {/* Date selector for the start date */}

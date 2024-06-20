@@ -102,8 +102,17 @@ app.post("/user/addTransInfo", (req, res) => {
 // Also performs the action of changing the total amount of the budget that the transcation
 // is applied to
 app.post("/addTransaction", (req, res) => {
-  const { userID, budgetID, categoryID, title, description, amount, date } =
-    req.body;
+  const {
+    userID,
+    budgetID,
+    categoryID,
+    title,
+    description,
+    amountSigned,
+    date,
+  } = req.body;
+
+  console.log(amountSigned);
 
   let newTransaction = {
     transactionID: data.transactions.length + 1,
@@ -112,7 +121,7 @@ app.post("/addTransaction", (req, res) => {
     categoryID: parseInt(categoryID),
     title: title,
     description: description,
-    amount: parseFloat(amount),
+    amount: parseFloat(amountSigned),
     date: date,
   };
   for (let user of data.users) {
@@ -251,4 +260,6 @@ app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
   // console.log(parseFloat("40fe"));
   console.log(isNaN("403"));
+  let test = "test";
+  console.log("-".concat(test));
 });

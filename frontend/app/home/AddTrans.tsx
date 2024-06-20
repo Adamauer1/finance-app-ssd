@@ -74,13 +74,14 @@ export default function AddTrans() {
   // sends the input data to the backend to be saved
   const onPressAddTransaction = () => {
     //console.log(date);
+    let amountSigned = selectedRadioIndex ? "-".concat(amount) : amount;
     axios.post(`${URL}/addTransaction`, {
       userID,
       budgetID,
       categoryID,
       title,
       description,
-      amount,
+      amountSigned,
       date,
     });
 
@@ -151,17 +152,13 @@ export default function AddTrans() {
       </Layout>
 
       {/* Text Input for the amount */}
-      {/* Needs to be a positive or negative number -> 5 or -5 */}
       <Layout style={styles.inputRow}>
         <Text style={styles.text}>Amount:</Text>
         <TextInput
           style={styles.input}
-          value={amount.toString()}
+          value={amount}
           onChangeText={(text) => {
-            // setCheckAmount(!isNaN(parseFloat(text)))
-            // two ways to doing it add a new selection or radio button to select adding or subtracting
-            // or use the numeric & punk keyboard and check with isNaN()
-            //console.log(!isNaN(text) && text != "");
+            text = text.replace(",", ".");
             setAmount(text);
           }}
           keyboardType="numeric"
