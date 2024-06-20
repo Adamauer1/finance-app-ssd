@@ -8,6 +8,7 @@ import {
   Text,
   TextInput,
   View,
+  ScrollView,
 } from "react-native";
 import { URL } from "@/constants/URL";
 export default function LogInScreen() {
@@ -38,7 +39,13 @@ export default function LogInScreen() {
     }
   };
   return (
-    <View style={styles.container}>
+    <ScrollView
+      contentContainerStyle={styles.container}
+      alwaysBounceVertical={false}
+      automaticallyAdjustKeyboardInsets={true}
+      bounces={false}
+    >
+      {/* <View style={styles.container}> */}
       <Text style={styles.TEXT1}> USER SIGNUP </Text>
       <View style={styles.imageContainer}>
         {/* <Image source={require("@/images/Main.png")} style={styles.image} /> */}
@@ -77,8 +84,8 @@ export default function LogInScreen() {
           <Text style={styles.buttonText}>SIGNUP</Text>
         </Pressable>
       </View>
-    </View>
-    //add email
+      {/* </View> */}
+    </ScrollView>
   );
 }
 

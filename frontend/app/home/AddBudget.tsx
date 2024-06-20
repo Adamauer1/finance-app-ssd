@@ -7,6 +7,7 @@ import {
   Text,
   TextInput,
   View,
+  ScrollView,
 } from "react-native";
 import { router, useLocalSearchParams } from "expo-router";
 import { URL } from "@/constants/URL";
@@ -48,7 +49,13 @@ export default function AddBudget() {
   };
 
   return (
-    <View style={styles.container}>
+    <ScrollView
+      contentContainerStyle={styles.container}
+      alwaysBounceVertical={false}
+      automaticallyAdjustKeyboardInsets={true}
+      bounces={false}
+    >
+      {/* <View style={styles.container}> */}
       {/* <View style={styles.imageContainer}>
         <Image source={require("@/images/Main.png")} style={styles.image} />
       </View> */}
@@ -98,7 +105,8 @@ export default function AddBudget() {
       <Pressable style={styles.button} onPress={onPressAddBudget}>
         <Text style={styles.buttonText}>Add Budget</Text>
       </Pressable>
-    </View>
+      {/* </View> */}
+    </ScrollView>
   );
 }
 const styles = StyleSheet.create({

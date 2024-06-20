@@ -33,10 +33,10 @@ app.post("/login", (req, res) => {
       break;
     }
   }
-  res.json({ userID: userID, result: authCheck });
+  //res.json({ userID: userID, result: authCheck });
 
   // for testing the app auto login
-  //res.json({ userID: 1, result: true });
+  res.json({ userID: 1, result: true });
 });
 
 // adds a new user to the list of users based on the information from req.body
