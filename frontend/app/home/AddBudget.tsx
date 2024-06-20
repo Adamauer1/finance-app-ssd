@@ -23,18 +23,27 @@ export default function AddBudget() {
   const params = useLocalSearchParams();
   const { userID } = params;
   const [budgetName, setBudgetName] = useState("");
+  const [firstName, setFirstName] = useState(false);
   const [totalAmount, setTotalAmount] = useState("");
   const [startDate, setstartDate] = useState(new Date());
   const [endDate, setendDate] = useState(new Date());
+  const [validEndDate, setValidEndDate] = useState(true);
 
   // sends the input data to the backend to be saved
   const onPressAddBudget = () => {
     //console.log(date);
 
+    if (budgetName == "" || !validEndDate) {
+      setFirstName(true);
+      return;
+    }
+
+    let amount = totalAmount == "" ? "0" : totalAmount;
+
     axios.post(`${URL}/addBudget`, {
       userID,
       budgetName,
-      totalAmount,
+      amount,
       startDate,
       endDate,
     });
@@ -65,9 +74,12 @@ export default function AddBudget() {
       <Layout style={styles.inputRow}>
         <Text style={styles.text}>Budget Name:</Text>
         <TextInput
-          style={styles.input}
+          style={
+            budgetName == "" && firstName ? styles.inputError : styles.input
+          }
           value={budgetName}
           onChangeText={(text) => setBudgetName(text)}
+          onPress={() => setFirstName(true)}
         />
       </Layout>
       {/* Text Input for the total amount */}
@@ -81,6 +93,8 @@ export default function AddBudget() {
             setTotalAmount(text);
           }}
           keyboardType="numeric"
+          placeholder="0"
+          placeholderTextColor={"black"}
         />
       </Layout>
       {/* Date selector for the start date */}
@@ -98,7 +112,13 @@ export default function AddBudget() {
         <Text style={styles.text}>End Date</Text>
         <Datepicker
           date={endDate}
-          onSelect={(nextDate) => setendDate(nextDate)}
+          style={validEndDate ? styles.datePicker : styles.datePickerError}
+          onSelect={(nextDate) => {
+            //console.log();
+            setValidEndDate(!(nextDate < startDate));
+            console.log(validEndDate);
+            setendDate(nextDate);
+          }}
         />
       </Layout>
 
@@ -164,6 +184,18 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
 
+  inputError: {
+    //flex: 0.1,
+    height: 40,
+    width: 200,
+    //margin: 12,
+    borderWidth: 3,
+    borderColor: "red",
+    //padding: 10,
+    backgroundColor: "#afee",
+    textAlign: "center",
+  },
+
   inputRow: {
     display: "flex",
     width: "100%",
@@ -195,6 +227,16 @@ const styles = StyleSheet.create({
     position: "absolute",
     top: 120,
     color: "#afee",
+  },
+
+  datePicker: {
+    // borderWidth: 3,
+    // borderColor: "red",
+  },
+
+  datePickerError: {
+    borderWidth: 3,
+    borderColor: "red",
   },
 
   background: {

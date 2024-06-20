@@ -181,14 +181,14 @@ app.post("/budget", (req, res) => {
 // builds the new budget created by the user
 // then adds the budget to the list of budgets in the user dataset
 app.post("/addBudget", (req, res) => {
-  const { userID, budgetName, totalAmount, startDate, endDate } = req.body;
+  const { userID, budgetName, amount, startDate, endDate } = req.body;
 
   let userIDs = [];
   userIDs.push(parseInt(userID));
   let newBudget = {
     budgetID: data.budgets.length + 1,
     budgetName: budgetName,
-    totalAmount: parseFloat(totalAmount),
+    totalAmount: parseFloat(amount),
     startDate: startDate,
     endDate: endDate,
     userIDs: userIDs,

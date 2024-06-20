@@ -28,8 +28,10 @@ export default function AddTrans() {
   const [budgetID, setBudgetID] = useState(0);
   const [categoryID, setCategoryID] = useState(0);
   const [title, setTitle] = useState("");
+  const [firstTitle, setFirstTitle] = useState(false);
   const [description, setDescription] = useState("");
-  const [amount, setAmount] = useState("0");
+  const [amount, setAmount] = useState("");
+  const [firstAmount, setFirstAmount] = useState(false);
   const [date, setDate] = useState(new Date());
   const [budgetNames, setBudgetNames] = useState({});
   const [budgetIDs, setBudgetIDs] = useState<[]>([]);
@@ -74,6 +76,12 @@ export default function AddTrans() {
   // sends the input data to the backend to be saved
   const onPressAddTransaction = () => {
     //console.log(date);
+    if (title == "" || amount == "") {
+      setFirstAmount(true);
+      setFirstTitle(true);
+      return;
+    }
+
     let amountSigned = selectedRadioIndex ? "-".concat(amount) : amount;
     axios.post(`${URL}/addTransaction`, {
       userID,
@@ -136,7 +144,15 @@ export default function AddTrans() {
       {/* Text Input for the transaction title */}
       <Layout style={styles.inputRow}>
         <Text style={styles.text}>Title:</Text>
-        <TextInput style={styles.input} value={title} onChangeText={setTitle} />
+        <TextInput
+          style={title == "" && firstTitle ? styles.inputError : styles.input}
+          value={title}
+          onChangeText={(text) => {
+            //setFirstTitle(true);
+            setTitle(text);
+          }}
+          onPress={() => setFirstTitle(true)}
+        />
       </Layout>
 
       <Layout style={styles.inputRow}>
@@ -155,13 +171,16 @@ export default function AddTrans() {
       <Layout style={styles.inputRow}>
         <Text style={styles.text}>Amount:</Text>
         <TextInput
-          style={styles.input}
+          style={amount == "" && firstAmount ? styles.inputError : styles.input}
           value={amount}
           onChangeText={(text) => {
             text = text.replace(",", ".");
             setAmount(text);
           }}
           keyboardType="numeric"
+          onPress={() => setFirstAmount(true)}
+          // placeholder="0"
+          // placeholderTextColor={"black"}
         />
       </Layout>
       {/* Select input that allows for the selection of the category */}
@@ -264,6 +283,18 @@ const styles = StyleSheet.create({
     width: 200,
     //margin: 12,
     borderWidth: 1,
+    //padding: 10,
+    backgroundColor: "#afee",
+    textAlign: "center",
+  },
+
+  inputError: {
+    //flex: 0.1,
+    height: 40,
+    width: 200,
+    //margin: 12,
+    borderWidth: 3,
+    borderColor: "red",
     //padding: 10,
     backgroundColor: "#afee",
     textAlign: "center",
